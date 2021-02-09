@@ -6,4 +6,8 @@
     <RootNamespace>Garage_Ö5</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LimitedList\LimitedList.csproj" />
+  </ItemGroup>
+
 </Project>
