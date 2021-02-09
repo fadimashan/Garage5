@@ -7,12 +7,12 @@ namespace Garage_Ö5
 {
 
 
-   public class Garage<T> : IEnumerable<T> 
+   public class Garage<T> : IEnumerable<T> where T : Vehicle  
     {
-        T[] vehicleList;
-        public Garage()
+        public T[] vehicleList;
+        public Garage(int capacity)
         {
-            vehicleList = new T[10];
+            vehicleList = new T[capacity];
         }
 
         public bool Add(T item)
@@ -26,7 +26,7 @@ namespace Garage_Ö5
                     return true;
                 }
             }
-            Console.WriteLine("List is full");
+            Console.WriteLine("Garage is full");
             return false;
         }
 
@@ -36,6 +36,7 @@ namespace Garage_Ö5
             {
                 if (item != null)
                 {
+                    Console.WriteLine(item.GetType().Name);
                     yield return item;
                 }
             }

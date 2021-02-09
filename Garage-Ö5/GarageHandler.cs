@@ -1,40 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections;
+
 
 namespace Garage_Ö5
 {
-    public interface IGarageHandler
+    public interface IGarageHandler :  IEnumerable
     {
-        public Garage<Vehicle> newGarage { get; set; }
 
-
-        public void Add(Vehicle item);
+        public void Add<T>(T item);
 
         public Garage<Vehicle> Print();
         
     }
-     abstract class GarageHandler: IGarageHandler
+     public class GarageHandler: IGarageHandler
     {
-        Garage<Vehicle> garage = new Garage<Vehicle>();
+        public Garage<Vehicle> garage;
+        int capacity = 0;
 
-        public GarageHandler()
+        public GarageHandler(int capacity)
         {
-            
-           
+           garage = new Garage<Vehicle>(capacity);
+            this.capacity = capacity;
         }
 
-        Garage<Vehicle> IGarageHandler.newGarage { get => this.garage; set =>  new Garage<Vehicle>(); }
+        public Garage<Vehicle> newGarage => new Garage<Vehicle>(capacity);
 
-        public void Add(Vehicle item)
+        public void Add<T>(T item)
         {
-            garage.Add(item);
+            garage.Add(item as Vehicle);
         }
-
 
         public Garage<Vehicle> Print()
         {
             return garage;
         }
+
+         IEnumerator IEnumerable.GetEnumerator() => garage.GetEnumerator();
+       
     }
 }

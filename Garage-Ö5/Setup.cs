@@ -9,22 +9,26 @@ namespace Garage_Ö5
 
         public Setup()
         {
-            var op = new Oprations();
+            "Enter the capacity for the Garage".PrintLine();
+            var capacity = Console.ReadLine();
+            int capacityNum = 0;
+            capacityNum = capacity.ParesToInt(capacityNum);
+            var op = new Oprations(capacityNum);
             while (true)
             {
-               // Console.Clear();
+                // Console.Clear();
                 ("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
                  + "\n1. Add a new Vehicale"
                  + "\n2. Remove a Vehicale"
                  + "\n3. Print a list of the vehivls in the garage"
                  + "\n4. Search on vehicle"
                  + "\n0. Exit the application").PrintLine();
-                char input = ' '; 
+                char input = ' ';
                 try
                 {
-                    input = Console.ReadLine()[0]; 
+                    input = Console.ReadLine()[0];
                 }
-                catch (IndexOutOfRangeException) 
+                catch (IndexOutOfRangeException)
                 {
                     Console.Clear();
                     ("Please enter some input!").PrintLine();
@@ -32,7 +36,10 @@ namespace Garage_Ö5
                 switch (input)
                 {
                     case '1':
+                        Console.Clear();
                         op.AddVehicleOption();
+                        
+                        
                         break;
                     case '2':
 

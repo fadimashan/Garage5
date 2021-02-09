@@ -5,21 +5,20 @@ using System.Text;
 
 namespace Garage_Ö5
 {
-
-
     class Oprations
     {
-        //fun search
-        //print list of the vehicles
-        //Garage<Vehicle> garage = new Garage<Vehicle>();
-        IGarageHandler garage;
+        public GarageHandler garageHandler;
+       // IGarageHandler IGarage { get; set;}
 
-        public Oprations()
+        public Oprations(int capacity)
         {
+            garageHandler = new GarageHandler(capacity);
             
-            var v1 = new Boat("Boat123", "white", 0, 34.3);
+            //var newg = gh.newGarage;
+            //var v1 = new Boat("Boat123", "white", 0, 34.3);
+            //g.Add(v1);
             //garage.Add(v1);
-           // igrage.Add(v1);
+            // igrage.Add(v1);
         }
 
         public void AddCar()
@@ -30,7 +29,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garage.Add(car);
+            garageHandler.Add(car);
         }
 
         public void AddBoat()
@@ -41,7 +40,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var boat = new Boat(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garage.Add(boat);
+            garageHandler.Add(boat);
         }
 
         public void AddAirplane()
@@ -52,7 +51,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var airplane = new Airplane(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garage.Add(airplane);
+            garageHandler.Add(airplane);
         }
 
         public void AddBus()
@@ -63,7 +62,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var bus = new Bus(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garage.Add(bus);
+            garageHandler.Add(bus);
         }
 
         public void AddMotorcycle()
@@ -72,7 +71,7 @@ namespace Garage_Ö5
             Console.WriteLine("enter fueltype");
             var input = Console.ReadLine();
             var motorcycle = new Motorcycle(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, input);
-            garage.Add(motorcycle);
+            garageHandler.Add(motorcycle);
         }
 
         public Vehicle AddNewVehicle()
@@ -86,7 +85,7 @@ namespace Garage_Ö5
 
         public void PrintVehicleList()
         {
-            var list = garage.Print();
+            var list = garageHandler.Print();
             foreach (var ve in list)
             {
                 if (ve is Car)
@@ -147,6 +146,7 @@ namespace Garage_Ö5
                 {
                     case '1':
                         AddCar();
+                        goToMainmenu = true;
                         break;
                     case '2':
                         AddAirplane();
@@ -170,85 +170,6 @@ namespace Garage_Ö5
                 }
             }
         }
-
-        //g.Add(v1);
-
-        //g.Add(c);
-
-        // g.Select(g =>  g is Car).Where(g=> g.Equals(Car)).ToList().ForEach(vv => Console.WriteLine(vv.));
-
-
-        //foreach (var ce in garage)
-        //{
-        //    if (ce is Car)
-        //    {
-        //        var car = ce as Car;
-        //        Console.WriteLine(car.Color + " " + car.Cylinder + " " + car.RegistreringNum);
-        //    }
-        //}
-
-        //foreach (T ce in g)
-        //{
-        //    if (ce is Boat)
-        //    {
-        //        Console.WriteLine(ce.Color + " " + ce.Lenght + " " + ce.RegistreringNum);
-        //    }
-        //}
-
-
-
-
-        //var garage = new Garage<Vehicle>();
-        //string registrationNumber = RegistrationNumber();
-        //string color = Color();
-        //int wheelsNum = WheelsNum();
-        //int enginesNum = 0;
-        //var vehicle = new Airplane(registrationNumber, color, wheelsNum, enginesNum);
-
-        //// bool accesst = true;
-        //Console.WriteLine("Add a registration number");
-        //var registerInput = Console.ReadLine();
-        //if (garage.Contains(registerInput))
-        //while (accesst)
-        //{
-        //    foreach (Airplane vr in garage)
-        //    {
-        //        if (vr.RegistreringNum.Contains(registerInput))
-        //        {
-        //            Console.WriteLine("try agin");
-        //            accesst = true;
-        //        }
-        //        else
-        //        registrationNumber = registerInput;
-        //        accesst = false;
-        //    }
-        //    registrationNumber = registerInput;
-        //    accesst = false;
-        //}
-        //   registrationNumber = registerInput;
-
-
-
-
-
-
-        //if (vehicle is Airplane)
-        //{
-        //    Console.WriteLine("How many engines");
-        //    var enginInput = Console.ReadLine();
-        //    enginesNum = enginInput.ParesToInt(enginesNum);
-        //}
-
-
-
-
-
-        //garage.Add(vehicle);
-
-        //foreach (Airplane ve in garage)
-        //{
-        //    Console.WriteLine(ve.RegistreringNum);
-        //}
 
 
         public string RegistrationNumber()
