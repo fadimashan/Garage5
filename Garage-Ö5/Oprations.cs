@@ -66,9 +66,9 @@ namespace Garage_Ö5
             "Enter the vehicale registration number to see the details".PrintLine();
             string regiNumber = Console.ReadLine();
             bool access = false;
-             for ( int i = 0;  i < vehicleList.Length; i++)
+            for (int i = 0; i < vehicleList.Length; i++)
             {
-                if(vehicleList[i] != null && vehicleList[i].RegistreringNum.ToLower() == regiNumber.ToLower())
+                if (vehicleList[i] != null && vehicleList[i].RegistreringNum.ToLower() == regiNumber.ToLower())
                 {
                     if (vehicleList[i] is Car)
                     {
@@ -107,6 +107,79 @@ namespace Garage_Ö5
                 }
             }
             if (!access) "This registrtion# not access!".PrintLine();
+        }
+
+        public void SerchViaProperties()
+        {
+            string vehicleName = " ";
+            string vehicleColor = " ";
+            int vehicleWeelsNumber = -1;
+            var vehList = garageHandler.garage.vehicleList;
+            "Do you want to serch via vehicle type? (prees (1) if Yes, (0) for No".PrintLine();
+            Char veType = Console.ReadLine()[0];
+            switch (veType)
+            {
+                case '1':
+                    "Write type of vehicle.".PrintLine();
+                    string vehicleType = Console.ReadLine();
+                    if (vehicleType.ToLower() == "car" || vehicleType.ToLower() == "airplane" || vehicleType.ToLower() == "boat" || vehicleType.ToLower() == "bus" || vehicleType.ToLower() == "motorcycle")
+                    {
+                        vehicleName = vehicleType;
+                        vehicleName = vehicleName[0].ToString().ToUpper() + vehicleName.Substring(1);
+                    }
+                    break;
+                case '0':
+                    break;
+                default:
+                    ("Please enter some valid input (0, 1)").PrintLine();
+                    break;
+            }
+            "Do you want to serch via vehicle color? (prees (1) if Yes, (0) for No".PrintLine();
+            Char veColor = Console.ReadLine()[0];
+            switch (veColor)
+            {
+                case '1':
+                    "Write Color of vehicle.".PrintLine();
+                    vehicleColor = Console.ReadLine();
+                    break;
+                case '0':
+                    break;
+                default:
+                    ("Please enter some valid input (0, 1)").PrintLine();
+                    break;
+            }
+            "Do you want to serch via vehicle wheels number? (prees (1) if Yes, (0) for No".PrintLine();
+            Char veWheels = Console.ReadLine()[0];
+            switch (veWheels)
+            {
+                case '1':
+                    "Write number of Wheels of vehicle.".PrintLine();
+                    var vehicleWeel = Console.ReadLine();
+                    vehicleWeelsNumber = vehicleWeel.ParesToInt(vehicleWeelsNumber);
+                    break;
+                case '0':
+                    break;
+                default:
+                    ("Please enter some valid input (0, 1)").PrintLine();
+                    break;
+            }
+
+            foreach (var veh in vehList)
+            {
+                if (veh != null)
+                {
+                    if ((!string.IsNullOrWhiteSpace(vehicleName) && veh.GetType().Name == vehicleName)
+                        || (!string.IsNullOrWhiteSpace(vehicleColor) && veh.Color.ToLower() == vehicleColor.ToLower())
+                        || (vehicleWeelsNumber != -1 && veh.WheelsNum == vehicleWeelsNumber)
+                        )
+                    {
+                        ($" This Vehicle is a {veh.WheelsNum} wheels {veh.GetType().Name}, The registration#: {veh.RegistreringNum}, Color: {veh.Color} ").PrintLine();
+
+                    }
+                    else "There is no vehicles with this properties!".PrintLine();
+                }
+            }
+
         }
 
         public void RemoveItem()
@@ -154,7 +227,7 @@ namespace Garage_Ö5
 
         }
 
-        public int Conter()
+        public int Counter()
         {
             counter = 0;
             var le = garageHandler.garage.vehicleList;
@@ -164,7 +237,6 @@ namespace Garage_Ö5
                 {
                     counter++;
                 }
-                //  return counter;
             }
             return counter;
         }
@@ -183,35 +255,30 @@ namespace Garage_Ö5
                 {
                     var car = ve as Car;
                     cars++;
-                   // ($" This Vehicle is a {car.WheelsNum} wheels Car, The registration#: {car.RegistreringNum}, Color: {car.Color} and it's: {car.Cylinder} Cylinder ").PrintLine();
                 }
 
                 if (ve is Boat)
                 {
                     var boat = ve as Boat;
                     boats++;
-                   // ($" This Vehicle is a {boat.WheelsNum} wheels Boat, The registration#: {boat.RegistreringNum}, Color: {boat.Color} and it's: {boat.Lenght} Lenght ").PrintLine();
                 }
 
                 if (ve is Airplane)
                 {
                     var airplane = ve as Airplane;
                     airplanes++;
-                   // ($" This Vehicle is a {airplane.WheelsNum} wheels Airplane, The registration#: {airplane.RegistreringNum}, Color: {airplane.Color}, with: {airplane.EnginesNum} Engins").PrintLine();
                 }
 
                 if (ve is Bus)
                 {
                     var bus = ve as Bus;
                     buss++;
-                   // ($" This Vehicle is a {bus.WheelsNum} wheels Bus, The registration#: {bus.RegistreringNum}, Color: {bus.Color}, with: {bus.SeatsNum} sets ").PrintLine();
                 }
 
                 if (ve is Motorcycle)
                 {
                     var motorcycle = ve as Motorcycle;
                     motors++;
-                   // ($" This Vehicle is a {motorcycle.WheelsNum} wheels Motorcycle, The registration#: {motorcycle.RegistreringNum}, Color: {motorcycle.Color} and Fueltype is: {motorcycle.Fueltype}").PrintLine();
                 }
             }
             "The Vehicles in the Garage:".PrintLine();
@@ -223,7 +290,7 @@ namespace Garage_Ö5
             if (motors > 0) allVehicls = allVehicls + $"-({motors}#) Motorcycle\n";
 
             allVehicls.PrintLine();
-                    
+
         }
 
         public void AddVehicleOption()

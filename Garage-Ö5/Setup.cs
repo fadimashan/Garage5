@@ -51,13 +51,14 @@ namespace Garage_Ö5
                     case '3':
                         Console.Clear();
                         op.PrintVehicleList();
-                        $"number of vehicles is: {op.Conter()}\n\n".PrintLine();
+                        $"number of vehicles is: {op.Counter()}\n\n".PrintLine();
                         break;
                     case '4':
                         op.SearchOnVehicle();
                         break; 
                     case '5':
                         // Search on vehicles via the Color, wheels number or type
+                        op.SerchViaProperties();
 
                         break;
                     case '0':

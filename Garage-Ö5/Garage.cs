@@ -9,7 +9,6 @@ namespace Garage_Ö5
    public class Garage<T> : IEnumerable<T> where T : Vehicle  
     {
         public T[] vehicleList;
-        public int count = 0;
 
         public Garage(int capacity)
         {
@@ -45,13 +44,10 @@ namespace Garage_Ö5
 
         public IEnumerator<T> GetEnumerator()
         {
-            count = 0;
             foreach (T item in vehicleList)
             {
                 if (item != null)
                 {
-                    count += 1;
-                    Console.WriteLine(item.GetType().Name);
                     yield return item;
                 }
             }
