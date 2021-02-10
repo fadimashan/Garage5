@@ -26,10 +26,7 @@ namespace Garage_Ö5
     {
         public int EnginesNum { get; set; }
 
-        public Airplane(string registreringNum, string color, int wheelsNum, int enginesNum) : base(registreringNum, color, wheelsNum)
-        {
-            EnginesNum = enginesNum;
-        }
+        public Airplane(string registreringNum, string color, int wheelsNum, int enginesNum) : base(registreringNum, color, wheelsNum) => EnginesNum = enginesNum;
 
     }
 
@@ -37,10 +34,7 @@ namespace Garage_Ö5
     {
         public string Fueltype { get; set; }
 
-       public Motorcycle(string registreringNum, string color, int wheelsNum, string fueltype) : base(registreringNum, color, wheelsNum)
-        {
-            Fueltype = fueltype;
-        }
+       public Motorcycle(string registreringNum, string color, int wheelsNum, string fueltype) : base(registreringNum, color, wheelsNum) => Fueltype = fueltype;
 
     }
 
@@ -48,10 +42,9 @@ namespace Garage_Ö5
     {
         public int Cylinder { get; set; }
 
-        public Car(string registreringNum, string color, int wheelsNum, int cylinder) : base(registreringNum, color, wheelsNum)
-        {
-            Cylinder = cylinder;
-        }
+        public Car(string registreringNum, string color, int wheelsNum, int cylinder) : base(registreringNum, color, wheelsNum) => Cylinder = cylinder;
+
+
     }
 
     class Bus : Vehicle
