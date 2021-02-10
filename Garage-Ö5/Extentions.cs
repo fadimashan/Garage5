@@ -55,17 +55,5 @@ namespace Garage_Ö5
                 Console.WriteLine(item.GetType().Name);
             }
         }
-
-        //public static void PrintCar<Car>(this IEnumerable<Car> collection)
-        //{
-        //    foreach (Car item in collection)
-        //    {
-        //        if (item is Car) {
-                   
-        //            Console.WriteLine((item is Car).GetType().Name. );
-        //        }
-        //    }
-        //}
-
     }
 }

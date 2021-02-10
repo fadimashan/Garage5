@@ -13,6 +13,10 @@ namespace Garage_Ö5
         {
             garageHandler = new GarageHandler(capacity);
 
+            garageHandler.garage.vehicleList[0] = new Car("car123", "Red", 4, 12);
+            garageHandler.garage.vehicleList[1] = new Airplane("air123", "Red", 6, 2);
+            garageHandler.garage.vehicleList[2] = new Car("car125", "yellow", 8, 16);
+
         }
 
         public void AddCar()
@@ -116,85 +120,104 @@ namespace Garage_Ö5
             int vehicleWeelsNumber = -1;
             var vehList = garageHandler.garage.vehicleList;
             "Do you want to serch via vehicle type? (prees (1) if Yes, (0) for No".PrintLine();
-            Char veType = Console.ReadLine()[0];
-            switch (veType)
+            bool vType = true;
+            do
             {
-                case '1':
-                    "Write type of vehicle.".PrintLine();
-                    string vehicleType = Console.ReadLine();
-                    if (vehicleType.ToLower() == "car" || vehicleType.ToLower() == "airplane" || vehicleType.ToLower() == "boat" || vehicleType.ToLower() == "bus" || vehicleType.ToLower() == "motorcycle")
-                    {
-                        vehicleName = vehicleType;
-                        vehicleName = vehicleName[0].ToString().ToUpper() + vehicleName.Substring(1);
-                    }
-                    break;
-                case '0':
-                    break;
-                default:
-                    ("Please enter some valid input (0, 1)").PrintLine();
-                    break;
-            }
-            "Do you want to serch via vehicle color? (prees (1) if Yes, (0) for No".PrintLine();
-            Char veColor = Console.ReadLine()[0];
-            switch (veColor)
-            {
-                case '1':
-                    "Write Color of vehicle.".PrintLine();
-                    vehicleColor = Console.ReadLine();
-                    break;
-                case '0':
-                    break;
-                default:
-                    ("Please enter some valid input (0, 1)").PrintLine();
-                    break;
-            }
-            "Do you want to serch via vehicle wheels number? (prees (1) if Yes, (0) for No".PrintLine();
-            Char veWheels = Console.ReadLine()[0];
-            switch (veWheels)
-            {
-                case '1':
-                    "Write number of Wheels of vehicle.".PrintLine();
-                    var vehicleWeel = Console.ReadLine();
-                    vehicleWeelsNumber = vehicleWeel.ParesToInt(vehicleWeelsNumber);
-                    break;
-                case '0':
-                    break;
-                default:
-                    ("Please enter some valid input (0, 1)").PrintLine();
-                    break;
-            }
-
-            foreach (var veh in vehList)
-            {
-                if (veh != null)
+                Char veType = Console.ReadLine()[0];
+                switch (veType)
                 {
-                    if ((!string.IsNullOrWhiteSpace(vehicleName) && veh.GetType().Name == vehicleName)
-                        || (!string.IsNullOrWhiteSpace(vehicleColor) && veh.Color.ToLower() == vehicleColor.ToLower())
-                        || (vehicleWeelsNumber != -1 && veh.WheelsNum == vehicleWeelsNumber)
-                        )
-                    {
-                        ($" This Vehicle is a {veh.WheelsNum} wheels {veh.GetType().Name}, The registration#: {veh.RegistreringNum}, Color: {veh.Color} ").PrintLine();
-
-                    }
-                    else "There is no vehicles with this properties!".PrintLine();
+                    case '1':
+                        "Write type of vehicle.".PrintLine();
+                        string vehicleType = Console.ReadLine();
+                        if (vehicleType.ToLower() == "car" || vehicleType.ToLower() == "airplane" || vehicleType.ToLower() == "boat" || vehicleType.ToLower() == "bus" || vehicleType.ToLower() == "motorcycle")
+                        {
+                            vehicleName = vehicleType;
+                            vehicleName = vehicleName[0].ToString().ToUpper() + vehicleName.Substring(1);
+                        }
+                        vType = false;
+                        break;
+                    case '0':
+                        vType = false;
+                        break;
+                    default:
+                        ("Please enter some valid input (0, 1)").PrintLine();
+                        break;
                 }
-            }
+            } while (vType);
+            "Do you want to serch via vehicle color? (prees (1) if Yes, (0) for No".PrintLine();
+            bool vColor = true;
+            do
+            {
+                Char veColor = Console.ReadLine()[0];
+                switch (veColor)
+                {
+                    case '1':
+                        "Write Color of vehicle.".PrintLine();
+                        vehicleColor = Console.ReadLine();
+                        vColor = false;
+                        break;
+                    case '0':
+                        vColor = false;
+                        break;
+                    default:
+                        ("Please enter some valid input (0, 1)").PrintLine();
+                        break;
+                }
+            } while (vColor);
+            "Do you want to serch via vehicle wheels number? (prees (1) if Yes, (0) for No".PrintLine();
+            bool vWheel = true;
+            do
+            {
+                Char veWheels = Console.ReadLine()[0];
+                switch (veWheels)
+                {
+                    case '1':
+                        "Write number of Wheels of vehicle.".PrintLine();
+                        var vehicleWeel = Console.ReadLine();
+                        vehicleWeelsNumber = vehicleWeel.ParesToInt(vehicleWeelsNumber);
+                        vWheel = false;
+                        break;
+                    case '0':
+                        vWheel = false;
+                        break;
+                    default:
+                        ("Please enter some valid input (0, 1)").PrintLine();
+                        break;
+                }
+            } while (vWheel);
 
+            Console.Clear();
+            "\n*************Search on Vehicles************\n".PrintLine();
+
+            vehList.Where(ve => ve != null)
+                                .Where(ve => (!string.IsNullOrWhiteSpace(vehicleName)) && ve.GetType().Name.ToLower() == vehicleName.ToLower()
+                                || (!string.IsNullOrWhiteSpace(vehicleColor)) && ve.Color.ToLower() == vehicleColor.ToLower()
+                                || vehicleWeelsNumber != -1 && ve.WheelsNum == vehicleWeelsNumber)
+                                .ToList().ForEach(ve =>
+                                $"This vehicle is a {ve.WheelsNum} wheels {ve.GetType().Name}, The Color is: {ve.Color}".PrintLine());
+
+            "\n\n*******************************************\n\n".PrintLine();
         }
 
         public void RemoveItem()
         {
             var vehicleList = garageHandler.garage.vehicleList;
             "Enter a vehicle nuber to remove it".PrintLine();
-            string vehicleNumber = Console.ReadLine();
-            int output = 0;
-            output = vehicleNumber.ParesToInt(output);
-
-            if (output < vehicleList.Length && output > 0)
+            bool removeCon = true;
+            do
             {
-                vehicleList[output - 1] = null;
-
+                string vehicleNumber = Console.ReadLine();
+                int output = 0;
+                output = vehicleNumber.ParesToInt(output);
+                var con = Counter();
+                if (output <= con && output > 0)
+                {
+                    vehicleList[output - 1] = null;
+                    removeCon = false;
+                }
+                else "Please choose a correct vehicle number to remove".PrintLine();
             }
+            while (removeCon);
         }
 
         internal void ListForRemoveVehicale()
@@ -241,7 +264,7 @@ namespace Garage_Ö5
             return counter;
         }
 
-        public void PrintVehicleList()
+        public void PrintVehicleList(bool printNumbers)
         {
             int cars = 0;
             int airplanes = 0;
@@ -255,42 +278,55 @@ namespace Garage_Ö5
                 {
                     var car = ve as Car;
                     cars++;
+                    $"This vehicle is a {car.WheelsNum} wheels {ve.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {car.Cylinder}".PrintLine();
                 }
 
                 if (ve is Boat)
                 {
                     var boat = ve as Boat;
                     boats++;
+                    $"This vehicle is a {boat.WheelsNum} wheels {ve.GetType().Name}, Color: {boat.Color}, Registration#: {boat.RegistreringNum}, {boat.Lenght} lenght".PrintLine();
+
                 }
 
                 if (ve is Airplane)
                 {
                     var airplane = ve as Airplane;
                     airplanes++;
+                    $"This vehicle is a {airplane.WheelsNum} wheels {ve.GetType().Name}, Color: {airplane.Color}, Registration#: {airplane.RegistreringNum} with {airplane.EnginesNum} engines".PrintLine();
+
                 }
 
                 if (ve is Bus)
                 {
                     var bus = ve as Bus;
                     buss++;
+                    $"This vehicle is a {bus.WheelsNum} wheels {ve.GetType().Name}, Color: {bus.Color}, Registration#: {bus.RegistreringNum} and have {bus.SeatsNum} sets ".PrintLine();
+
                 }
 
                 if (ve is Motorcycle)
                 {
                     var motorcycle = ve as Motorcycle;
                     motors++;
+                    $"This vehicle is a {motorcycle.WheelsNum} wheels {ve.GetType().Name}, Color: {motorcycle.Color}, Registration#: {motorcycle.RegistreringNum} and {motorcycle.Fueltype}".PrintLine();
+
                 }
             }
-            "The Vehicles in the Garage:".PrintLine();
-            string allVehicls = "";
-            if (cars > 0) allVehicls = allVehicls + $"-({cars}#) Car\n";
-            if (boats > 0) allVehicls = allVehicls + $"-({boats}#) Boat\n";
-            if (airplanes > 0) allVehicls = allVehicls + $"-({airplanes}#) Airplane\n";
-            if (buss > 0) allVehicls = allVehicls + $"-({buss}#) Bus\n";
-            if (motors > 0) allVehicls = allVehicls + $"-({motors}#) Motorcycle\n";
 
-            allVehicls.PrintLine();
+            if (printNumbers)
+            {
+                Console.Clear();
+                "\n********Number the Vehicles in the Garage******\n".PrintLine();
+                string allVehicls = "";
+                if (cars > 0) allVehicls = allVehicls + $"-({cars}#) Car\n";
+                if (boats > 0) allVehicls = allVehicls + $"-({boats}#) Boat\n";
+                if (airplanes > 0) allVehicls = allVehicls + $"-({airplanes}#) Airplane\n";
+                if (buss > 0) allVehicls = allVehicls + $"-({buss}#) Bus\n";
+                if (motors > 0) allVehicls = allVehicls + $"-({motors}#) Motorcycle\n";
 
+                allVehicls.PrintLine();
+            }
         }
 
         public void AddVehicleOption()
@@ -320,6 +356,8 @@ namespace Garage_Ö5
                     case '1':
                         if (garageHandler.garage.CheckIfThereIsNull())
                         {
+                            Console.Clear();
+                            "\n*************Add new Car************\n".PrintLine();
                             AddCar();
                             "Successed! You Add a new Car to the Garage\n\n".PrintLine();
                             goToMainmenu = true;
@@ -329,6 +367,8 @@ namespace Garage_Ö5
                     case '2':
                         if (garageHandler.garage.CheckIfThereIsNull())
                         {
+                            Console.Clear();
+                            "\n*************Add new Airplane************\n".PrintLine();
                             AddAirplane();
                             "Successed! You Add a new Airplane to the Garage\n\n".PrintLine();
 
@@ -339,6 +379,8 @@ namespace Garage_Ö5
                     case '3':
                         if (garageHandler.garage.CheckIfThereIsNull())
                         {
+                            Console.Clear();
+                            "\n*************Add new Boat************\n".PrintLine();
                             AddBoat();
                             "Successed! You Add a new Boat to the Garage\n\n".PrintLine();
 
@@ -349,6 +391,8 @@ namespace Garage_Ö5
                     case '4':
                         if (garageHandler.garage.CheckIfThereIsNull())
                         {
+                            Console.Clear();
+                            "\n*************Add new Bus************\n".PrintLine();
                             AddBus();
                             "Successed! You Add a new Bus to the Garage\n\n".PrintLine();
 
@@ -359,6 +403,8 @@ namespace Garage_Ö5
                     case '5':
                         if (garageHandler.garage.CheckIfThereIsNull())
                         {
+                            Console.Clear();
+                            "\n*************Add new Motorcycle************\n".PrintLine();
                             AddMotorcycle();
                             "Successed! You Add a new Motorcycle to the Garage\n\n".PrintLine();
 
