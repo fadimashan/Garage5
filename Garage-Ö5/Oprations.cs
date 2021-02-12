@@ -187,12 +187,12 @@ namespace Garage_Ö5
             Console.Clear();
             "\n*************Search on Vehicles************\n".PrintLine();
 
-            vehList.Where(ve => ve != null)
-                                .Where(ve => (!string.IsNullOrWhiteSpace(vehicleName)) && ve.GetType().Name.ToLower() == vehicleName.ToLower()
-                                || (!string.IsNullOrWhiteSpace(vehicleColor)) && ve.Color.ToLower() == vehicleColor.ToLower()
-                                || vehicleWeelsNumber != -1 && ve.WheelsNum == vehicleWeelsNumber)
-                                .ToList().ForEach(ve =>
-                                $"This vehicle is a {ve.WheelsNum} wheels {ve.GetType().Name}, The Color is: {ve.Color}".PrintLine());
+            var searchList = garageHandler.garage.SearchOnVehicle(vehicleName, vehicleColor, vehicleWeelsNumber);
+
+            searchList.Where(a => a != null)
+                .ToList()
+                .ForEach(a =>
+                $"This vehicle is a {a.WheelsNum} wheels {a.GetType().Name}, Color: {a.Color}, Registration#: {a.RegistreringNum}".PrintLine());
 
             "\n\n*******************************************\n\n".PrintLine();
         }
@@ -208,14 +208,14 @@ namespace Garage_Ö5
             {
                 var vehicleList = garageHandler.garage.ToArray();
                 "Enter a vehicle nuber to remove it".PrintLine();
-                bool removeCon = true;
+                bool removeCon = false;
                 do
                 {
                     string vehicleNumber = Console.ReadLine();
                     int output = 0;
                     output = vehicleNumber.ParesToInt(output);
                     removeCon = garageHandler.garage.RemoveItem(output);
-                    if (removeCon)
+                    if (!removeCon)
                     {
                         "Please choose a correct vehicle registraition number to remove".PrintLine();
                     }
@@ -224,7 +224,7 @@ namespace Garage_Ö5
                         "Vehicle was removed seccussfuly!\n\n".PrintLine();
                     }
                 }
-                while (removeCon);
+                while (!removeCon);
             }
         }
 

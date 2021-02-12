@@ -47,7 +47,7 @@ namespace Garage_Ö5
 
     }
 
-    class Bus : Vehicle
+    public class Bus : Vehicle
     {
         public int SeatsNum { get; set; }
 
@@ -57,7 +57,7 @@ namespace Garage_Ö5
         }
     }
 
-    class Boat : Vehicle
+    public class Boat : Vehicle
     {
         public double Lenght { get; set; }
 

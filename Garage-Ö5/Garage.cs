@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 namespace Garage_Ö5
 {
@@ -9,11 +10,13 @@ namespace Garage_Ö5
     public class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private T[] vehicleList;
-        public int counter;
+        private int counter;
+        public int vehLenght;
         public Garage(int capacity)
         {
             capacity = Math.Max(0, capacity);
             vehicleList = new T[capacity];
+            vehLenght = vehicleList.Length;
         }
 
         public bool Add(T item)
@@ -76,10 +79,10 @@ namespace Garage_Ö5
                     vehicleList[i] = tmp[i];
 
                 }
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
 
 
 
@@ -108,6 +111,16 @@ namespace Garage_Ö5
                 }
             }
             return false;
+        }
+
+        public List<T> SearchOnVehicle(string type, string color, int wheels)
+        {
+
+            return vehicleList.Where(ve => ve != null)
+                               .Where(ve => (!string.IsNullOrWhiteSpace(type)) && ve.GetType().Name.ToLower() == type.ToLower()
+                               || (!string.IsNullOrWhiteSpace(color)) && ve.Color.ToLower() == color.ToLower()
+                               || wheels != -1 && ve.WheelsNum == wheels)
+                               .ToList();
         }
 
         public IEnumerator<T> GetEnumerator()
