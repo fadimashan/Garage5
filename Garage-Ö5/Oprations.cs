@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Garage_Ö5
 {
     public class Oprations
     {
         public GarageHandler garageHandler;
-        public int counter = 0;
+        public int counter;
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
 
-            garageHandler.garage.vehicleList[0] = new Car("car123", "Red", 4, 12);
-            garageHandler.garage.vehicleList[1] = new Airplane("air123", "Red", 6, 2);
-            garageHandler.garage.vehicleList[2] = new Car("car125", "yellow", 8, 16);
-
+            garageHandler.Add(new Car("car123", "Red", 4, 12));
+            garageHandler.Add(new Airplane("air123", "Red", 6, 2));
+            garageHandler.Add(new Car("car125", "yellow", 8, 16));
+            counter = garageHandler.garage.Counter();
         }
 
         public void AddCar()
@@ -66,7 +64,7 @@ namespace Garage_Ö5
         internal void SearchOnVehicle()
         {
             Console.Clear();
-            var vehicleList = garageHandler.garage.vehicleList;
+            var vehicleList = garageHandler.garage.ToArray();
             "Enter the vehicale registration number to see the details".PrintLine();
             string regiNumber = Console.ReadLine();
             bool access = false;
@@ -118,7 +116,7 @@ namespace Garage_Ö5
             string vehicleName = " ";
             string vehicleColor = " ";
             int vehicleWeelsNumber = -1;
-            var vehList = garageHandler.garage.vehicleList;
+            var vehList = garageHandler.garage.ToArray();
             "Do you want to serch via vehicle type? (prees (1) if Yes, (0) for No".PrintLine();
             bool vType = true;
             do
@@ -201,28 +199,38 @@ namespace Garage_Ö5
 
         public void RemoveItem()
         {
-            var vehicleList = garageHandler.garage.vehicleList;
-            "Enter a vehicle nuber to remove it".PrintLine();
-            bool removeCon = true;
-            do
+            if (garageHandler.garage.Counter() <= 0)
             {
-                string vehicleNumber = Console.ReadLine();
-                int output = 0;
-                output = vehicleNumber.ParesToInt(output);
-                var con = Counter();
-                if (output <= con && output > 0)
-                {
-                    vehicleList[output - 1] = null;
-                    removeCon = false;
-                }
-                else "Please choose a correct vehicle number to remove".PrintLine();
+                "There is no vehicle in the garage!\n\n".PrintLine();
+                return;
             }
-            while (removeCon);
+            else
+            {
+                var vehicleList = garageHandler.garage.ToArray();
+                "Enter a vehicle nuber to remove it".PrintLine();
+                bool removeCon = true;
+                do
+                {
+                    string vehicleNumber = Console.ReadLine();
+                    int output = 0;
+                    output = vehicleNumber.ParesToInt(output);
+                    removeCon = garageHandler.garage.RemoveItem(output);
+                    if (removeCon)
+                    {
+                        "Please choose a correct vehicle registraition number to remove".PrintLine();
+                    }
+                    else
+                    {
+                        "Vehicle was removed seccussfuly!\n\n".PrintLine();
+                    }
+                }
+                while (removeCon);
+            }
         }
 
         internal void ListForRemoveVehicale()
         {
-            var vehicleList = garageHandler.garage.vehicleList;
+            var vehicleList = garageHandler.garage.ToArray();
             for (int i = 0; i < vehicleList.Length; i++)
             {
                 if (vehicleList[i] != null)
@@ -250,83 +258,57 @@ namespace Garage_Ö5
 
         }
 
-        public int Counter()
+
+        public void PrintVehicleList()
         {
-            counter = 0;
-            var le = garageHandler.garage.vehicleList;
-            for (int i = 0; i < le.Length; i++)
-            {
-                if (le[i] != null)
-                {
-                    counter++;
-                }
-            }
-            return counter;
+            var arr = garageHandler.garage.ToArray();
+            arr.Where(a => a is Car)
+                .ToList()
+                .ForEach(car =>
+                $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {(car as Car).Cylinder} Cylinder".PrintLine());
+               
+            arr.Where(a => a is Boat)
+               .ToList()
+               .ForEach(car =>
+               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {(car as Boat).Lenght} lenght".PrintLine());
+
+            arr.Where(a => a is Airplane)
+               .ToList()
+               .ForEach(car =>
+               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} with {(car as Airplane).EnginesNum} Engines".PrintLine());
+
+            arr.Where(a => a is Bus)
+               .ToList()
+               .ForEach(car =>
+               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and Seats number: {(car as Bus).SeatsNum}".PrintLine());
+
+            arr.Where(a => a is Motorcycle)
+               .ToList()
+               .ForEach(car =>
+               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and FuelType: {(car as Motorcycle).Fueltype} ".PrintLine());
+
         }
 
-        public void PrintVehicleList(bool printNumbers)
+        public void PrintNumOfVehicle()
         {
-            int cars = 0;
-            int airplanes = 0;
-            int boats = 0;
-            int buss = 0;
-            int motors = 0;
-            var arr = garageHandler.garage.vehicleList;
-            foreach (var ve in arr)
-            {
-                if (ve is Car)
-                {
-                    var car = ve as Car;
-                    cars++;
-                    $"This vehicle is a {car.WheelsNum} wheels {ve.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {car.Cylinder}".PrintLine();
-                }
+            var arr = garageHandler.garage.ToArray();
 
-                if (ve is Boat)
-                {
-                    var boat = ve as Boat;
-                    boats++;
-                    $"This vehicle is a {boat.WheelsNum} wheels {ve.GetType().Name}, Color: {boat.Color}, Registration#: {boat.RegistreringNum}, {boat.Lenght} lenght".PrintLine();
+            var carnum = arr.Where(a => a is Car).Count();
+            var boatnum = arr.Where(a => a is Boat).Count();
+            var airplanenum = arr.Where(a => a is Airplane).Count();
+            var busnum = arr.Where(a => a is Bus).Count();
+            var motornum = arr.Where(a => a is Motorcycle).Count();
 
-                }
+            Console.Clear();
+            "\n********Number the Vehicles in the Garage******\n".PrintLine();
+            string allVehicls = "";
+            if (carnum > 0) allVehicls = allVehicls + $"-({carnum}#) Car\n";
+            if (boatnum > 0) allVehicls = allVehicls + $"-({boatnum}#) Boat\n";
+            if (airplanenum > 0) allVehicls = allVehicls + $"-({airplanenum}#) Airplane\n";
+            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Bus\n";
+            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Motorcycle\n";
 
-                if (ve is Airplane)
-                {
-                    var airplane = ve as Airplane;
-                    airplanes++;
-                    $"This vehicle is a {airplane.WheelsNum} wheels {ve.GetType().Name}, Color: {airplane.Color}, Registration#: {airplane.RegistreringNum} with {airplane.EnginesNum} engines".PrintLine();
-
-                }
-
-                if (ve is Bus)
-                {
-                    var bus = ve as Bus;
-                    buss++;
-                    $"This vehicle is a {bus.WheelsNum} wheels {ve.GetType().Name}, Color: {bus.Color}, Registration#: {bus.RegistreringNum} and have {bus.SeatsNum} sets ".PrintLine();
-
-                }
-
-                if (ve is Motorcycle)
-                {
-                    var motorcycle = ve as Motorcycle;
-                    motors++;
-                    $"This vehicle is a {motorcycle.WheelsNum} wheels {ve.GetType().Name}, Color: {motorcycle.Color}, Registration#: {motorcycle.RegistreringNum} and {motorcycle.Fueltype}".PrintLine();
-
-                }
-            }
-
-            if (printNumbers)
-            {
-                Console.Clear();
-                "\n********Number the Vehicles in the Garage******\n".PrintLine();
-                string allVehicls = "";
-                if (cars > 0) allVehicls = allVehicls + $"-({cars}#) Car\n";
-                if (boats > 0) allVehicls = allVehicls + $"-({boats}#) Boat\n";
-                if (airplanes > 0) allVehicls = allVehicls + $"-({airplanes}#) Airplane\n";
-                if (buss > 0) allVehicls = allVehicls + $"-({buss}#) Bus\n";
-                if (motors > 0) allVehicls = allVehicls + $"-({motors}#) Motorcycle\n";
-
-                allVehicls.PrintLine();
-            }
+            allVehicls.PrintLine();
         }
 
         public void AddVehicleOption()
@@ -431,7 +413,7 @@ namespace Garage_Ö5
             do
             {
                 isUnique = true;
-                var arrList = garageHandler.garage.vehicleList;
+                var arrList = garageHandler.garage.ToArray();
                 "Add a registration number".PrintLine();
                 registerInput = Console.ReadLine();
                 for (int i = 0; i < arrList.Length; i++)

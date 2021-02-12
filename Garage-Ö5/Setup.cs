@@ -50,18 +50,21 @@ namespace Garage_Ö5
                     case '2':
                         Console.Clear();
                         op.ListForRemoveVehicale();
+
                         op.RemoveItem();
+                        //  op.RemoveItem();
                         break;
                     case '3':
                         Console.Clear();
                         "\n*************List of Vehicles************\n".PrintLine();
-                        op.PrintVehicleList(false);
-                        $"number of vehicles is: {op.Counter()}\n\n".PrintLine();
+                        op.PrintVehicleList();
+                        $"number of vehicles is: {op.garageHandler.garage.Counter()}\n\n".PrintLine();
                         break;
                     case '4':
                         Console.Clear();
-                        op.PrintVehicleList(true);
-                        $"number of vehicles is: {op.Counter()}\n\n".PrintLine(); 
+                        op.PrintNumOfVehicle();
+                       // op.PrintVehicleList(true);
+                        $"number of vehicles is: {op.garageHandler.garage.Counter()}\n\n".PrintLine(); 
                         break;
                     case '5':
                         op.SearchOnVehicle();
