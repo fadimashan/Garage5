@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Garage_Ö5
@@ -7,14 +8,17 @@ namespace Garage_Ö5
     {
         public GarageHandler garageHandler;
         public int counter;
+        public int Capacity { get; set; }
+        //     WriteAndReadFile wRFile = new WriteAndReadFile();
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
 
-            garageHandler.Add(new Car("car123", "Red", 4, 12));
-            garageHandler.Add(new Airplane("air123", "Red", 6, 2));
-            garageHandler.Add(new Car("car125", "yellow", 8, 16));
+            //garageHandler.Add(new Car("car123", "Red", 4, 12));
+            //garageHandler.Add(new Airplane("air123", "Red", 6, 2));
+            //garageHandler.Add(new Car("car125", "yellow", 8, 16));
             counter = garageHandler.garage.Counter();
+            Capacity = capacity;
         }
 
         public void AddCar()
@@ -26,6 +30,10 @@ namespace Garage_Ö5
             output = input.ParesToInt(output);
             var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.Add(car);
+            List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString()};
+            // WriteAndReadFile wRFile = new WriteAndReadFile();
+
+         //   wRFile.WriteFile(cars);
         }
 
         public void AddBoat()
@@ -269,26 +277,67 @@ namespace Garage_Ö5
                
             arr.Where(a => a is Boat)
                .ToList()
-               .ForEach(car =>
-               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {(car as Boat).Lenght} lenght".PrintLine());
+               .ForEach(boat =>
+               $"This vehicle is a {boat.WheelsNum} wheels {boat.GetType().Name}, Color: {boat.Color}, Registration#: {boat.RegistreringNum} and {(boat as Boat).Lenght} lenght".PrintLine());
 
             arr.Where(a => a is Airplane)
                .ToList()
-               .ForEach(car =>
-               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} with {(car as Airplane).EnginesNum} Engines".PrintLine());
+               .ForEach(airplane =>
+               $"This vehicle is a {airplane.WheelsNum} wheels {airplane.GetType().Name}, Color: {airplane.Color}, Registration#: {airplane.RegistreringNum} with {(airplane as Airplane).EnginesNum} Engines".PrintLine());
 
             arr.Where(a => a is Bus)
                .ToList()
-               .ForEach(car =>
-               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and Seats number: {(car as Bus).SeatsNum}".PrintLine());
+               .ForEach(bus =>
+               $"This vehicle is a {bus.WheelsNum} wheels {bus.GetType().Name}, Color: {bus.Color}, Registration#: {bus.RegistreringNum} and Seats number: {(bus as Bus).SeatsNum}".PrintLine());
 
             arr.Where(a => a is Motorcycle)
                .ToList()
-               .ForEach(car =>
-               $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and FuelType: {(car as Motorcycle).Fueltype} ".PrintLine());
+               .ForEach(motor =>
+               $"This vehicle is a {motor.WheelsNum} wheels {motor.GetType().Name}, Color: {motor.Color}, Registration#: {motor.RegistreringNum} and FuelType: {(motor as Motorcycle).Fueltype} ".PrintLine());
 
         }
 
+        public void ReadFromFile()
+        {
+            WriteAndReadFile wdf = new WriteAndReadFile(Capacity);
+            var lines= wdf.ReadFile();
+
+            foreach (var line in lines)
+            {
+                string[] entries = line.Split(',');
+
+                if (entries[0].ToLower() == "car")
+                {
+                    Car car = new Car(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+                    garageHandler.Add(car);
+                }
+
+                if (entries[0].ToLower() == "boat")
+                {
+                    Boat boat = new Boat(entries[1], entries[2], int.Parse(entries[3]), double.Parse(entries[4]));
+                    garageHandler.Add(boat);
+                }
+
+                if (entries[0].ToLower() == "airplane")
+                {
+                    Airplane air = new Airplane(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+                    garageHandler.Add(air);
+                }
+
+                if (entries[0].ToLower() == "bus")
+                {
+                    Bus bus = new Bus(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+                    garageHandler.Add(bus);
+                }
+
+                if (entries[0].ToLower() == "motorcycle")
+                {
+                    Motorcycle motor = new Motorcycle(entries[1], entries[2], int.Parse(entries[3]), entries[4]);
+                    garageHandler.Add(motor);
+                }
+
+            }
+        }
         public void PrintNumOfVehicle()
         {
             var arr = garageHandler.garage.ToArray();

@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Garage_Ö5
 {
     class Setup
     {
-        //public Setup()
-        //{
-            
-           
-        //}
-
+        WriteAndReadFile wRFile;
+   
         public void Run()
         {
+           // WriteAndReadFile wRFile = new WriteAndReadFile();
+         
             "Enter the capacity for the Garage".PrintLine();
             var capacity = Console.ReadLine();
             int capacityNum = 0;
             capacityNum = capacity.ParesToInt(capacityNum);
             var op = new Oprations(capacityNum);
+            WriteAndReadFile wRFile = new WriteAndReadFile(capacityNum);
+
             while (true)
             {
                 ("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
@@ -28,6 +30,8 @@ namespace Garage_Ö5
                  + "\n4. Print a number of the vehivls in the garage"
                  + "\n5. Search on vehicle via the registration number"
                  + "\n6. Search on vehicles via the Color, wheels number or type"
+                 + "\n7. Save all Data to file"
+                 + "\n8. Read all the saved Data"
                  + "\n0. Exit the application").PrintLine();
 
                 char input = ' ';
@@ -71,6 +75,13 @@ namespace Garage_Ö5
                         break;
                     case '6':
                         op.SerchViaProperties();
+                        break; 
+                    case '7':
+                        wRFile.WriteFile();
+                        break; 
+                    case '8':
+                        op.ReadFromFile();
+                        
                         break;
                     case '0':
                         Environment.Exit(0);
