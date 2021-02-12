@@ -7,12 +7,9 @@ using System.Text;
 namespace Garage_Ö5
 {
     class Setup
-    {
-        WriteAndReadFile wRFile;
-   
+    {   
         public void Run()
         {
-           // WriteAndReadFile wRFile = new WriteAndReadFile();
          
             "Enter the capacity for the Garage".PrintLine();
             var capacity = Console.ReadLine();
@@ -56,7 +53,6 @@ namespace Garage_Ö5
                         op.ListForRemoveVehicale();
 
                         op.RemoveItem();
-                        //  op.RemoveItem();
                         break;
                     case '3':
                         Console.Clear();
@@ -67,7 +63,6 @@ namespace Garage_Ö5
                     case '4':
                         Console.Clear();
                         op.PrintNumOfVehicle();
-                       // op.PrintVehicleList(true);
                         $"number of vehicles is: {op.garageHandler.garage.Counter()}\n\n".PrintLine(); 
                         break;
                     case '5':
@@ -81,7 +76,6 @@ namespace Garage_Ö5
                         break; 
                     case '8':
                         op.ReadFromFile();
-                        
                         break;
                     case '0':
                         Environment.Exit(0);

@@ -9,12 +9,11 @@ namespace Garage_Ö5
         public GarageHandler garageHandler;
         public int counter;
         public int Capacity { get; set; }
-        //     WriteAndReadFile wRFile = new WriteAndReadFile();
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
 
-            //garageHandler.Add(new Car("car123", "Red", 4, 12));
+            garageHandler.Add(new Car("car123", "Red", 4, 12));
             //garageHandler.Add(new Airplane("air123", "Red", 6, 2));
             //garageHandler.Add(new Car("car125", "yellow", 8, 16));
             counter = garageHandler.garage.Counter();
@@ -31,9 +30,6 @@ namespace Garage_Ö5
             var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.Add(car);
             List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString()};
-            // WriteAndReadFile wRFile = new WriteAndReadFile();
-
-         //   wRFile.WriteFile(cars);
         }
 
         public void AddBoat()
