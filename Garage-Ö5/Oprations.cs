@@ -12,59 +12,14 @@ namespace Garage_Ö5
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
-
             garageHandler.Add(new Car("car123", "Red", 4, 12));
-            //garageHandler.Add(new Airplane("air123", "Red", 6, 2));
-            //garageHandler.Add(new Car("car125", "yellow", 8, 16));
             counter = garageHandler.garage.Counter();
             Capacity = capacity;
         }
 
-        public void AddCar()
-        {
-            var vehicle = AddNewVehicle();
-            ("enter cylender").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
-            var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(car);
-            List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString() };
-        }
 
-        public void AddBoat()
-        {
-            var vehicle = AddNewVehicle();
-            ("enter lenght").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
-            var boat = new Boat(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(boat);
-        }
 
-        public void AddAirplane()
-        {
-            var vehicle = AddNewVehicle();
-            ("enter engin number").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
-            var airplane = new Airplane(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(airplane);
-        }
-
-        public void AddBus()
-        {
-            var vehicle = AddNewVehicle();
-            ("enter sets number").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
-            var bus = new Bus(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(bus);
-        }
-
+        // features 
         internal void SearchOnVehicle()
         {
             Console.Clear();
@@ -114,7 +69,6 @@ namespace Garage_Ö5
             }
             if (!access) "This registrtion# not access!".PrintLine();
         }
-
         public void SerchViaProperties()
         {
             string vehicleName = " ";
@@ -200,7 +154,6 @@ namespace Garage_Ö5
 
             "\n\n*******************************************\n\n".PrintLine();
         }
-
         public void RemoveItem()
         {
             if (garageHandler.garage.Counter() <= 0)
@@ -232,148 +185,8 @@ namespace Garage_Ö5
             }
         }
 
-        internal void ListForRemoveVehicale()
-        {
-            var vehicleList = garageHandler.garage.ToArray();
-            for (int i = 0; i < vehicleList.Length; i++)
-            {
-                if (vehicleList[i] != null)
-                {
-                    $"{i + 1}. This vehicle is {vehicleList[i].GetType().Name}, the registration#: {vehicleList[i].RegistreringNum}".PrintLine();
-                }
-            }
-        }
 
-        public void AddMotorcycle()
-        {
-            var vehicle = AddNewVehicle();
-            ("enter fueltype").PrintLine();
-            var input = Console.ReadLine();
-            var motorcycle = new Motorcycle(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, input);
-            garageHandler.Add(motorcycle);
-        }
-
-        public Vehicle AddNewVehicle()
-        {
-            string register = RegistrationNumber();
-            string color = Color();
-            int wheel = WheelsNum();
-            return new Vehicle(register, color, wheel);
-
-        }
-
-
-        public void PrintVehicleList()
-        {
-            var arr = garageHandler.garage.ToArray();
-            arr.Where(a => a is Car)
-                .ToList()
-                .ForEach(car =>
-                $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {(car as Car).Cylinder} Cylinder".PrintLine());
-
-            arr.Where(a => a is Boat)
-               .ToList()
-               .ForEach(boat =>
-               $"This vehicle is a {boat.WheelsNum} wheels {boat.GetType().Name}, Color: {boat.Color}, Registration#: {boat.RegistreringNum} and {(boat as Boat).Lenght} lenght".PrintLine());
-
-            arr.Where(a => a is Airplane)
-               .ToList()
-               .ForEach(airplane =>
-               $"This vehicle is a {airplane.WheelsNum} wheels {airplane.GetType().Name}, Color: {airplane.Color}, Registration#: {airplane.RegistreringNum} with {(airplane as Airplane).EnginesNum} Engines".PrintLine());
-
-            arr.Where(a => a is Bus)
-               .ToList()
-               .ForEach(bus =>
-               $"This vehicle is a {bus.WheelsNum} wheels {bus.GetType().Name}, Color: {bus.Color}, Registration#: {bus.RegistreringNum} and Seats number: {(bus as Bus).SeatsNum}".PrintLine());
-
-            arr.Where(a => a is Motorcycle)
-               .ToList()
-               .ForEach(motor =>
-               $"This vehicle is a {motor.WheelsNum} wheels {motor.GetType().Name}, Color: {motor.Color}, Registration#: {motor.RegistreringNum} and FuelType: {(motor as Motorcycle).Fueltype} ".PrintLine());
-
-        }
-
-        public void ReadFromFile()
-        {
-            WriteAndReadFile wdf = new WriteAndReadFile(Capacity);
-            var lines = wdf.ReadFile();
-            var vehList = garageHandler.garage.ToList();
-
-            foreach (var line in lines)
-            {
-                string[] entries = line.Split(',');
-                {
-                    if (entries[0].ToLower() == "car")
-                    {
-                        Car car = new Car(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
-
-                        if (!RegistrationIsUnique(car))
-                        {
-                            garageHandler.Add(car);
-                        }
-                    }
-
-                    if (entries[0].ToLower() == "boat")
-                    {
-                        Boat boat = new Boat(entries[1], entries[2], int.Parse(entries[3]), double.Parse(entries[4]));
-                        garageHandler.Add(boat);
-                    }
-
-                    if (entries[0].ToLower() == "airplane")
-                    {
-                        Airplane air = new Airplane(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
-
-                        if (!RegistrationIsUnique(air))
-                        {
-                            garageHandler.Add(air);
-                        }
-                    }
-
-                    if (entries[0].ToLower() == "bus")
-                    {
-                        Bus bus = new Bus(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
-
-                        if (!RegistrationIsUnique(bus))
-                        {
-                            garageHandler.Add(bus);
-                        }
-                    }
-
-                    if (entries[0].ToLower() == "motorcycle")
-                    {
-                        Motorcycle motor = new Motorcycle(entries[1], entries[2], int.Parse(entries[3]), entries[4]);
-
-                        if (!RegistrationIsUnique(motor))
-                        {
-                            garageHandler.Add(motor);
-                        }
-                    }
-                }
-
-            }
-        }
-        public void PrintNumOfVehicle()
-        {
-            var arr = garageHandler.garage.ToArray();
-
-            var carnum = arr.Where(a => a is Car).Count();
-            var boatnum = arr.Where(a => a is Boat).Count();
-            var airplanenum = arr.Where(a => a is Airplane).Count();
-            var busnum = arr.Where(a => a is Bus).Count();
-            var motornum = arr.Where(a => a is Motorcycle).Count();
-
-            Console.Clear();
-            "\n********Number the Vehicles in the Garage******\n".PrintLine();
-            string allVehicls = "";
-            if (carnum > 0) allVehicls = allVehicls + $"-({carnum}#) Car\n";
-            if (boatnum > 0) allVehicls = allVehicls + $"-({boatnum}#) Boat\n";
-            if (airplanenum > 0) allVehicls = allVehicls + $"-({airplanenum}#) Airplane\n";
-            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Bus\n";
-            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Motorcycle\n";
-
-            allVehicls.PrintLine();
-        }
-
+        // UI functions
         public void AddVehicleOption()
         {
             bool goToMainmenu = false;
@@ -467,7 +280,219 @@ namespace Garage_Ö5
                 }
             }
         }
+        internal void ListForRemoveVehicale()
+        {
+            var vehicleList = garageHandler.garage.ToArray();
+            for (int i = 0; i < vehicleList.Length; i++)
+            {
+                if (vehicleList[i] != null)
+                {
+                    $"{i + 1}. This vehicle is {vehicleList[i].GetType().Name}, the registration#: {vehicleList[i].RegistreringNum}".PrintLine();
+                }
+            }
+        }
+        public void PrintVehicleList()
+        {
+            var arr = garageHandler.garage.ToArray();
+            arr.Where(a => a is Car)
+                .ToList()
+                .ForEach(car =>
+                $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {(car as Car).Cylinder} Cylinder".PrintLine());
 
+            arr.Where(a => a is Boat)
+               .ToList()
+               .ForEach(boat =>
+               $"This vehicle is a {boat.WheelsNum} wheels {boat.GetType().Name}, Color: {boat.Color}, Registration#: {boat.RegistreringNum} and {(boat as Boat).Lenght} lenght".PrintLine());
+
+            arr.Where(a => a is Airplane)
+               .ToList()
+               .ForEach(airplane =>
+               $"This vehicle is a {airplane.WheelsNum} wheels {airplane.GetType().Name}, Color: {airplane.Color}, Registration#: {airplane.RegistreringNum} with {(airplane as Airplane).EnginesNum} Engines".PrintLine());
+
+            arr.Where(a => a is Bus)
+               .ToList()
+               .ForEach(bus =>
+               $"This vehicle is a {bus.WheelsNum} wheels {bus.GetType().Name}, Color: {bus.Color}, Registration#: {bus.RegistreringNum} and Seats number: {(bus as Bus).SeatsNum}".PrintLine());
+
+            arr.Where(a => a is Motorcycle)
+               .ToList()
+               .ForEach(motor =>
+               $"This vehicle is a {motor.WheelsNum} wheels {motor.GetType().Name}, Color: {motor.Color}, Registration#: {motor.RegistreringNum} and FuelType: {(motor as Motorcycle).Fueltype} ".PrintLine());
+
+        }
+        public void PrintNumOfVehicle()
+        {
+            var arr = garageHandler.garage.ToArray();
+
+            var carnum = arr.Where(a => a is Car).Count();
+            var boatnum = arr.Where(a => a is Boat).Count();
+            var airplanenum = arr.Where(a => a is Airplane).Count();
+            var busnum = arr.Where(a => a is Bus).Count();
+            var motornum = arr.Where(a => a is Motorcycle).Count();
+
+            Console.Clear();
+            "\n********Number the Vehicles in the Garage******\n".PrintLine();
+            string allVehicls = "";
+            if (carnum > 0) allVehicls = allVehicls + $"-({carnum}#) Car\n";
+            if (boatnum > 0) allVehicls = allVehicls + $"-({boatnum}#) Boat\n";
+            if (airplanenum > 0) allVehicls = allVehicls + $"-({airplanenum}#) Airplane\n";
+            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Bus\n";
+            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Motorcycle\n";
+
+            allVehicls.PrintLine();
+        }
+        public void ReadFromFile()
+        {
+            WriteAndReadFile wdf = new WriteAndReadFile(Capacity);
+            var lines = wdf.ReadFile();
+            var vehList = garageHandler.garage.ToList();
+
+            if (vehList.Capacity < lines.Capacity) 
+            { "You will not be able to restore all the data because the new capacity less than the data size!\n\n".PrintLine(); }
+            
+            foreach (var line in lines)
+            {
+                string[] entries = line.Split(',');
+                {
+                    if (entries[0].ToLower() == "car")
+                    {
+                        Car car = new Car(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+
+                        if (!RegistrationIsUnique(car))
+                        {
+                            garageHandler.Add(car);
+                        }
+                    }
+
+                    if (entries[0].ToLower() == "boat")
+                    {
+                        Boat boat = new Boat(entries[1], entries[2], int.Parse(entries[3]), double.Parse(entries[4]));
+                        garageHandler.Add(boat);
+                    }
+
+                    if (entries[0].ToLower() == "airplane")
+                    {
+                        Airplane air = new Airplane(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+
+                        if (!RegistrationIsUnique(air))
+                        {
+                            garageHandler.Add(air);
+                        }
+                    }
+
+                    if (entries[0].ToLower() == "bus")
+                    {
+                        Bus bus = new Bus(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+
+                        if (!RegistrationIsUnique(bus))
+                        {
+                            garageHandler.Add(bus);
+                        }
+                    }
+
+                    if (entries[0].ToLower() == "motorcycle")
+                    {
+                        Motorcycle motor = new Motorcycle(entries[1], entries[2], int.Parse(entries[3]), entries[4]);
+
+                        if (!RegistrationIsUnique(motor))
+                        {
+                            garageHandler.Add(motor);
+                        }
+                    }
+                }
+            }
+            { "Restoring the Date done successfully\n\n".PrintLine(); }
+
+        }
+
+
+        //verification if registration number is unique 
+        public bool RegistrationIsUnique(Vehicle ve)
+        {
+            bool isUnique = false;
+            var arrList = garageHandler.garage.ToArray();
+            for (int i = 0; i < arrList.Length; i++)
+            {
+                if (arrList[i] != null)
+                {
+                    isUnique = false;
+                    if (arrList[i].RegistreringNum.ToLower() == ve.RegistreringNum.ToLower())
+                    {
+                        isUnique = true;
+                        return true;
+                    }
+                }
+
+            }
+            return isUnique;
+        }
+
+
+
+        /* Other type Vehicle method
+         */
+        public void AddCar()
+        {
+            var vehicle = AddNewVehicle();
+            ("enter cylender").PrintLine();
+            var input = Console.ReadLine();
+            int output = 0;
+            output = input.ParesToInt(output);
+            var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
+            garageHandler.Add(car);
+            List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString() };
+        }
+        public void AddBoat()
+        {
+            var vehicle = AddNewVehicle();
+            ("enter lenght").PrintLine();
+            var input = Console.ReadLine();
+            int output = 0;
+            output = input.ParesToInt(output);
+            var boat = new Boat(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
+            garageHandler.Add(boat);
+        }
+        public void AddAirplane()
+        {
+            var vehicle = AddNewVehicle();
+            ("enter engin number").PrintLine();
+            var input = Console.ReadLine();
+            int output = 0;
+            output = input.ParesToInt(output);
+            var airplane = new Airplane(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
+            garageHandler.Add(airplane);
+        }
+        public void AddBus()
+        {
+            var vehicle = AddNewVehicle();
+            ("enter sets number").PrintLine();
+            var input = Console.ReadLine();
+            int output = 0;
+            output = input.ParesToInt(output);
+            var bus = new Bus(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
+            garageHandler.Add(bus);
+        }
+        public void AddMotorcycle()
+        {
+            var vehicle = AddNewVehicle();
+            ("enter fueltype").PrintLine();
+            var input = Console.ReadLine();
+            var motorcycle = new Motorcycle(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, input);
+            garageHandler.Add(motorcycle);
+        }
+
+
+
+        /* General Vehicle method
+         */
+        public Vehicle AddNewVehicle()
+        {
+            string register = RegistrationNumber();
+            string color = Color();
+            int wheel = WheelsNum();
+            return new Vehicle(register, color, wheel);
+
+        }
 
         public string RegistrationNumber()
         {
@@ -496,26 +521,6 @@ namespace Garage_Ö5
             } while (!isUnique);
 
             return registerInput;
-        }
-
-        public bool RegistrationIsUnique(Vehicle ve)
-        {
-            bool isUnique = false;
-            var arrList = garageHandler.garage.ToArray();
-            for (int i = 0; i < arrList.Length; i++)
-            {
-                if (arrList[i] != null)
-                {
-                    isUnique = false;
-                    if (arrList[i].RegistreringNum.ToLower() == ve.RegistreringNum.ToLower())
-                    {
-                        isUnique = true;
-                        return true;
-                    }
-                }
-
-            }
-            return isUnique;
         }
 
         public string Color()
