@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,15 +7,20 @@ using System.Text;
 
 namespace Garage_Ö5
 {
-    class Setup
-    {   
+    public class Setup
+    {
+
+        private IConfiguration config;
+
+        public Setup(IConfiguration config)
+        {
+            this.config = config;
+        }
         public void Run()
         {
-         
-            "Enter the capacity for the Garage".PrintLine();
-            var capacity = Console.ReadLine();
-            int capacityNum = 0;
-            capacityNum = capacity.ParesToInt(capacityNum);
+
+            var capacityNum = config.GetGarageSetting("capacity");
+
             var op = new Oprations(capacityNum);
             WriteAndReadFile wRFile = new WriteAndReadFile(capacityNum);
 
@@ -63,17 +69,17 @@ namespace Garage_Ö5
                     case '4':
                         Console.Clear();
                         op.PrintNumOfVehicle();
-                        $"number of vehicles is: {op.garageHandler.garage.Counter()}\n\n".PrintLine(); 
+                        $"number of vehicles is: {op.garageHandler.garage.Counter()}\n\n".PrintLine();
                         break;
                     case '5':
                         op.SearchOnVehicle();
                         break;
                     case '6':
                         op.SerchViaProperties();
-                        break; 
+                        break;
                     case '7':
                         wRFile.WriteFile();
-                        break; 
+                        break;
                     case '8':
                         op.ReadFromFile();
                         break;
@@ -85,6 +91,12 @@ namespace Garage_Ö5
                         break;
                 }
             }
+        }
+
+        private void Initialize()
+        {
+            var capacity = config.GetGarageSetting("capacity");
+
         }
     }
 }

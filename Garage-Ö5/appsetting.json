@@ -1,0 +1,8 @@
+{
+  "garageapp": {
+    "garagesetting": {
+      "capacity": 20
+    },
+    "ui": "console"
+  }
+}

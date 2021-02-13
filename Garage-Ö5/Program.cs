@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Garage_Ö5
 {
@@ -8,9 +7,11 @@ namespace Garage_Ö5
     {
         static void Main(string[] args)
         {
+            //var setup = new Setup();
+            //setup.Run();
 
-            var setup = new Setup();
-            setup.Run();
+            var startup = new StartUp();
+            startup.SetUp();
 
         }
     }

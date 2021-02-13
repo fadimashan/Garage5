@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -54,6 +55,12 @@ namespace Garage_Ö5
             {
                 Console.WriteLine(item.GetType().Name);
             }
+        }
+
+        public static int GetGarageSetting(this IConfiguration config, string name)
+        {
+            var section = config.GetSection("garageapp:garagesetting");
+            return int.TryParse(section[name], out int result) ? result : 0;
         }
     }
 }
