@@ -23,27 +23,27 @@ namespace Garage_Ö5
             vehicle.Where(a => a is Car)
                .ToList()
                .ForEach(car =>
-               output.Add($"{car.GetType().Name}, {car.RegistreringNum},{car.Color},{car.WheelsNum},{(car as Car).Cylinder}"));
+               output.Add($"{car.GetType().Name},{car.RegistreringNum},{car.Color},{car.WheelsNum},{(car as Car).Cylinder}"));
 
             vehicle.Where(a => a is Boat)
                 .ToList()
                 .ForEach(boat =>
-               output.Add($"{boat.GetType().Name}, {boat.RegistreringNum},{boat.Color},{boat.WheelsNum},{(boat as Boat).Lenght}"));
+               output.Add($"{boat.GetType().Name},{boat.RegistreringNum},{boat.Color},{boat.WheelsNum},{(boat as Boat).Lenght}"));
 
             vehicle.Where(a => a is Airplane)
                .ToList()
                .ForEach(airplane =>
-               output.Add($"{airplane.GetType().Name}, {airplane.RegistreringNum},{airplane.Color},{airplane.WheelsNum},{(airplane as Airplane).EnginesNum}"));
+               output.Add($"{airplane.GetType().Name},{airplane.RegistreringNum},{airplane.Color},{airplane.WheelsNum},{(airplane as Airplane).EnginesNum}"));
 
             vehicle.Where(a => a is Bus)
                .ToList()
                .ForEach(bus =>
-               output.Add($"{bus.GetType().Name}, {bus.RegistreringNum},{bus.Color},{bus.WheelsNum},{(bus as Bus).SeatsNum}"));
+               output.Add($"{bus.GetType().Name},{bus.RegistreringNum},{bus.Color},{bus.WheelsNum},{(bus as Bus).SeatsNum}"));
 
             vehicle.Where(a => a is Motorcycle)
                .ToList()
                .ForEach(motor =>
-               output.Add($"{motor.GetType().Name}, {motor.RegistreringNum},{motor.Color},{motor.WheelsNum},{(motor as Motorcycle).Fueltype}"));
+               output.Add($"{motor.GetType().Name},{motor.RegistreringNum},{motor.Color},{motor.WheelsNum},{(motor as Motorcycle).Fueltype}"));
 
             File.WriteAllLines(path, output);
             "All data saved!\n".PrintLine();

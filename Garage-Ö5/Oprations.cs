@@ -29,7 +29,7 @@ namespace Garage_Ö5
             output = input.ParesToInt(output);
             var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.Add(car);
-            List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString()};
+            List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString() };
         }
 
         public void AddBoat()
@@ -270,7 +270,7 @@ namespace Garage_Ö5
                 .ToList()
                 .ForEach(car =>
                 $"This vehicle is a {car.WheelsNum} wheels {car.GetType().Name}, Color: {car.Color}, Registration#: {car.RegistreringNum} and {(car as Car).Cylinder} Cylinder".PrintLine());
-               
+
             arr.Where(a => a is Boat)
                .ToList()
                .ForEach(boat =>
@@ -296,40 +296,58 @@ namespace Garage_Ö5
         public void ReadFromFile()
         {
             WriteAndReadFile wdf = new WriteAndReadFile(Capacity);
-            var lines= wdf.ReadFile();
+            var lines = wdf.ReadFile();
+            var vehList = garageHandler.garage.ToList();
 
             foreach (var line in lines)
             {
                 string[] entries = line.Split(',');
-
-                if (entries[0].ToLower() == "car")
                 {
-                    Car car = new Car(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
-                    garageHandler.Add(car);
-                }
+                    if (entries[0].ToLower() == "car")
+                    {
+                        Car car = new Car(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
 
-                if (entries[0].ToLower() == "boat")
-                {
-                    Boat boat = new Boat(entries[1], entries[2], int.Parse(entries[3]), double.Parse(entries[4]));
-                    garageHandler.Add(boat);
-                }
+                        if (!RegistrationIsUnique(car))
+                        {
+                            garageHandler.Add(car);
+                        }
+                    }
 
-                if (entries[0].ToLower() == "airplane")
-                {
-                    Airplane air = new Airplane(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
-                    garageHandler.Add(air);
-                }
+                    if (entries[0].ToLower() == "boat")
+                    {
+                        Boat boat = new Boat(entries[1], entries[2], int.Parse(entries[3]), double.Parse(entries[4]));
+                        garageHandler.Add(boat);
+                    }
 
-                if (entries[0].ToLower() == "bus")
-                {
-                    Bus bus = new Bus(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
-                    garageHandler.Add(bus);
-                }
+                    if (entries[0].ToLower() == "airplane")
+                    {
+                        Airplane air = new Airplane(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
 
-                if (entries[0].ToLower() == "motorcycle")
-                {
-                    Motorcycle motor = new Motorcycle(entries[1], entries[2], int.Parse(entries[3]), entries[4]);
-                    garageHandler.Add(motor);
+                        if (!RegistrationIsUnique(air))
+                        {
+                            garageHandler.Add(air);
+                        }
+                    }
+
+                    if (entries[0].ToLower() == "bus")
+                    {
+                        Bus bus = new Bus(entries[1], entries[2], int.Parse(entries[3]), int.Parse(entries[4]));
+
+                        if (!RegistrationIsUnique(bus))
+                        {
+                            garageHandler.Add(bus);
+                        }
+                    }
+
+                    if (entries[0].ToLower() == "motorcycle")
+                    {
+                        Motorcycle motor = new Motorcycle(entries[1], entries[2], int.Parse(entries[3]), entries[4]);
+
+                        if (!RegistrationIsUnique(motor))
+                        {
+                            garageHandler.Add(motor);
+                        }
+                    }
                 }
 
             }
@@ -478,6 +496,26 @@ namespace Garage_Ö5
             } while (!isUnique);
 
             return registerInput;
+        }
+
+        public bool RegistrationIsUnique(Vehicle ve)
+        {
+            bool isUnique = false;
+            var arrList = garageHandler.garage.ToArray();
+            for (int i = 0; i < arrList.Length; i++)
+            {
+                if (arrList[i] != null)
+                {
+                    isUnique = false;
+                    if (arrList[i].RegistreringNum.ToLower() == ve.RegistreringNum.ToLower())
+                    {
+                        isUnique = true;
+                        return true;
+                    }
+                }
+
+            }
+            return isUnique;
         }
 
         public string Color()
