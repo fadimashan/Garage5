@@ -22,8 +22,6 @@ namespace Garage_Ö5
     {
         public List<Garage<Vehicle>> listOfGarage;
         public Garage<Vehicle> currentGarage;
-
-        public Garage<Vehicle> garage { get; }
         int capacity = 0;
         public GarageHandler(int capacity)
         {
@@ -81,7 +79,7 @@ namespace Garage_Ö5
 
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => garage.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => currentGarage.GetEnumerator();
 
     }
 }
