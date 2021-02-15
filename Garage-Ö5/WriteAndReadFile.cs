@@ -17,7 +17,7 @@ namespace Garage_Ö5
 
         public void WriteFile()
         {
-            var vehicle = op.garageHandler.garage.ToArray();
+            var vehicle = op.garageHandler.currentGarage.ToArray();
             List<string> output = new List<string>();
 
             vehicle.Where(a => a is Car)

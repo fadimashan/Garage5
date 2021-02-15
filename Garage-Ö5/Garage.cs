@@ -12,9 +12,10 @@ namespace Garage_Ö5
         private T[] vehicleList;
         private int counter;
         public int vehLenght;
-        public Garage(int capacity)
+        public string Name { get; set; }
+        public Garage(int capacity,string name)
         {
-
+            Name = name;
             capacity = Math.Max(0, capacity);
             vehicleList = new T[capacity];
             vehLenght = vehicleList.Length;
@@ -135,4 +136,6 @@ namespace Garage_Ö5
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     }
+
+   
 }

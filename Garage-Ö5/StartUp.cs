@@ -11,18 +11,13 @@ namespace Garage_Ö5
         {
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
-
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            //serviceProvider.GetService<Setup>().Run();
-           // var setup = new Setup();
             serviceProvider.GetRequiredService<Setup>().Run();
-          //  setup.Run();
         }
 
         private void ConfigureServices(ServiceCollection services)
         {
             IConfiguration config = GetConfig();
-
             services.AddSingleton(config);
             services.AddSingleton<Setup>();
             services.Configure<GarageSetting>(config.GetSection("garageapp:garagesetting").Bind);

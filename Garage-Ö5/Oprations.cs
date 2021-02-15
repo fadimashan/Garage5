@@ -12,18 +12,19 @@ namespace Garage_Ö5
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
-            garageHandler.Add(new Car("car123", "Red", 4, 12));
-            counter = garageHandler.garage.Counter();
+            garageHandler.AddVehicale(new Car("car123", "Red", 4, 12));
+            counter = garageHandler.currentGarage.Counter();
             Capacity = capacity;
+            
         }
 
-
+   
 
         // features 
         internal void SearchOnVehicle()
         {
             Console.Clear();
-            var vehicleList = garageHandler.garage.ToArray();
+            var vehicleList = garageHandler.currentGarage.ToArray();
             "Enter the vehicale registration number to see the details".PrintLine();
             string regiNumber = Console.ReadLine();
             bool access = false;
@@ -74,7 +75,7 @@ namespace Garage_Ö5
             string vehicleName = " ";
             string vehicleColor = " ";
             int vehicleWeelsNumber = -1;
-            var vehList = garageHandler.garage.ToArray();
+            var vehList = garageHandler.currentGarage.ToArray();
             "Do you want to serch via vehicle type? (prees (1) if Yes, (0) for No".PrintLine();
             bool vType = true;
             do
@@ -145,7 +146,7 @@ namespace Garage_Ö5
             Console.Clear();
             "\n*************Search on Vehicles************\n".PrintLine();
 
-            var searchList = garageHandler.garage.SearchOnVehicle(vehicleName, vehicleColor, vehicleWeelsNumber);
+            var searchList = garageHandler.currentGarage.SearchOnVehicle(vehicleName, vehicleColor, vehicleWeelsNumber);
 
             searchList.Where(a => a != null)
                 .ToList()
@@ -156,14 +157,14 @@ namespace Garage_Ö5
         }
         public void RemoveItem()
         {
-            if (garageHandler.garage.Counter() <= 0)
+            if (garageHandler.currentGarage.Counter() <= 0)
             {
                 "There is no vehicle in the garage!\n\n".PrintLine();
                 return;
             }
             else
             {
-                var vehicleList = garageHandler.garage.ToArray();
+                var vehicleList = garageHandler.currentGarage.ToArray();
                 "Enter a vehicle nuber to remove it".PrintLine();
                 bool removeCon = false;
                 do
@@ -171,7 +172,7 @@ namespace Garage_Ö5
                     string vehicleNumber = Console.ReadLine();
                     int output = 0;
                     output = vehicleNumber.ParesToInt(output);
-                    removeCon = garageHandler.garage.RemoveItem(output);
+                    removeCon = garageHandler.currentGarage.RemoveItem(output);
                     if (!removeCon)
                     {
                         "Please choose a correct vehicle registraition number to remove".PrintLine();
@@ -282,7 +283,7 @@ namespace Garage_Ö5
         }
         internal void ListForRemoveVehicale()
         {
-            var vehicleList = garageHandler.garage.ToArray();
+            var vehicleList = garageHandler.currentGarage.ToArray();
             for (int i = 0; i < vehicleList.Length; i++)
             {
                 if (vehicleList[i] != null)
@@ -293,7 +294,7 @@ namespace Garage_Ö5
         }
         public void PrintVehicleList()
         {
-            var arr = garageHandler.garage.ToArray();
+            var arr = garageHandler.currentGarage.ToArray();
             arr.Where(a => a is Car)
                 .ToList()
                 .ForEach(car =>
@@ -322,32 +323,35 @@ namespace Garage_Ö5
         }
         public void PrintNumOfVehicle()
         {
-            var arr = garageHandler.garage.ToArray();
+            var arr = garageHandler.currentGarage.ToArray();
+            if (arr.Length != 0)
+            {
+                var carnum = arr.Where(a => a is Car).Count();
+                var boatnum = arr.Where(a => a is Boat).Count();
+                var airplanenum = arr.Where(a => a is Airplane).Count();
+                var busnum = arr.Where(a => a is Bus).Count();
+                var motornum = arr.Where(a => a is Motorcycle).Count();
 
-            var carnum = arr.Where(a => a is Car).Count();
-            var boatnum = arr.Where(a => a is Boat).Count();
-            var airplanenum = arr.Where(a => a is Airplane).Count();
-            var busnum = arr.Where(a => a is Bus).Count();
-            var motornum = arr.Where(a => a is Motorcycle).Count();
+                Console.Clear();
+                "\n********Number the Vehicles in the Garage******\n".PrintLine();
+                string allVehicls = "";
+                if (carnum > 0) allVehicls = allVehicls + $"-({carnum}#) Car\n";
+                if (boatnum > 0) allVehicls = allVehicls + $"-({boatnum}#) Boat\n";
+                if (airplanenum > 0) allVehicls = allVehicls + $"-({airplanenum}#) Airplane\n";
+                if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Bus\n";
+                if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Motorcycle\n";
 
-            Console.Clear();
-            "\n********Number the Vehicles in the Garage******\n".PrintLine();
-            string allVehicls = "";
-            if (carnum > 0) allVehicls = allVehicls + $"-({carnum}#) Car\n";
-            if (boatnum > 0) allVehicls = allVehicls + $"-({boatnum}#) Boat\n";
-            if (airplanenum > 0) allVehicls = allVehicls + $"-({airplanenum}#) Airplane\n";
-            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Bus\n";
-            if (busnum > 0) allVehicls = allVehicls + $"-({busnum}#) Motorcycle\n";
-
-            allVehicls.PrintLine();
+                allVehicls.PrintLine();
+            }
+            else { "Garage is empty!".PrintLine(); }
         }
         public void ReadFromFile()
         {
             WriteAndReadFile wdf = new WriteAndReadFile(Capacity);
             var lines = wdf.ReadFile();
-            var vehList = garageHandler.garage.ToList();
+            var vehList = garageHandler.currentGarage.vehLenght;
 
-            if (vehList.Capacity < lines.Capacity) 
+            if (vehList < lines.Capacity) 
             { "You will not be able to restore all the data because the new capacity less than the data size!\n\n".PrintLine(); }
             
             foreach (var line in lines)
@@ -360,14 +364,14 @@ namespace Garage_Ö5
 
                         if (!RegistrationIsUnique(car))
                         {
-                            garageHandler.Add(car);
+                            garageHandler.AddVehicale(car);
                         }
                     }
 
                     if (entries[0].ToLower() == "boat")
                     {
                         Boat boat = new Boat(entries[1], entries[2], int.Parse(entries[3]), double.Parse(entries[4]));
-                        garageHandler.Add(boat);
+                        garageHandler.AddVehicale(boat);
                     }
 
                     if (entries[0].ToLower() == "airplane")
@@ -376,7 +380,7 @@ namespace Garage_Ö5
 
                         if (!RegistrationIsUnique(air))
                         {
-                            garageHandler.Add(air);
+                            garageHandler.AddVehicale(air);
                         }
                     }
 
@@ -386,7 +390,7 @@ namespace Garage_Ö5
 
                         if (!RegistrationIsUnique(bus))
                         {
-                            garageHandler.Add(bus);
+                            garageHandler.AddVehicale(bus);
                         }
                     }
 
@@ -396,7 +400,7 @@ namespace Garage_Ö5
 
                         if (!RegistrationIsUnique(motor))
                         {
-                            garageHandler.Add(motor);
+                            garageHandler.AddVehicale(motor);
                         }
                     }
                 }
@@ -410,7 +414,7 @@ namespace Garage_Ö5
         public bool RegistrationIsUnique(Vehicle ve)
         {
             bool isUnique = false;
-            var arrList = garageHandler.garage.ToArray();
+            var arrList = garageHandler.currentGarage.ToArray();
             for (int i = 0; i < arrList.Length; i++)
             {
                 if (arrList[i] != null)
@@ -439,7 +443,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(car);
+            garageHandler.AddVehicale(car);
             List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString() };
         }
         public void AddBoat()
@@ -450,7 +454,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var boat = new Boat(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(boat);
+            garageHandler.AddVehicale(boat);
         }
         public void AddAirplane()
         {
@@ -460,7 +464,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var airplane = new Airplane(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(airplane);
+            garageHandler.AddVehicale(airplane);
         }
         public void AddBus()
         {
@@ -470,7 +474,7 @@ namespace Garage_Ö5
             int output = 0;
             output = input.ParesToInt(output);
             var bus = new Bus(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
-            garageHandler.Add(bus);
+            garageHandler.AddVehicale(bus);
         }
         public void AddMotorcycle()
         {
@@ -478,7 +482,7 @@ namespace Garage_Ö5
             ("enter fueltype").PrintLine();
             var input = Console.ReadLine();
             var motorcycle = new Motorcycle(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, input);
-            garageHandler.Add(motorcycle);
+            garageHandler.AddVehicale(motorcycle);
         }
 
 
