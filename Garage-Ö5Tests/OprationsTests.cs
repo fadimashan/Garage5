@@ -1,7 +1,9 @@
 ﻿using Garage_Ö5;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Garage_Ö5.Tests
@@ -108,6 +110,29 @@ namespace Garage_Ö5.Tests
             Assert.IsTrue(addTest);
             Assert.AreEqual(expected, actual);
         }
+
+
+        public interface IMyCollection : IEnumerable<Vehicle>
+        {
+        }
+
+        [TestMethod]
+        [Obsolete]
+        public void TestList()
+        {
+            var mock = new Mock<IMyCollection>(MockBehavior.Strict);
+            mock.Setup(m => m.GetEnumerator()).Returns(VehicleList());
+
+            var size = mock.Object.Count();
+
+            Assert.AreEqual(1, size);
+        }
+
+        public IEnumerator<Vehicle> VehicleList()
+        {
+            yield return new Car("car123", "red", 4, 12) { RegistreringNum = "car123", Color = "red", WheelsNum = 4, Cylinder = 12 };
+        }
+
 
         [ClassCleanup]
         public static void GarageCleanUp()
