@@ -22,7 +22,7 @@ namespace Garage_Ö5.Tests
         [TestInitialize]
         public void SetUp()
         {
-            garage = TestContext.TestName.EndsWith('0') ? new Garage<Vehicle>(0) : new Garage<Vehicle>(8);
+            garage = TestContext.TestName.EndsWith('0') ? new Garage<Vehicle>(0,"garage") : new Garage<Vehicle>(8, "garage");
 
             if (TestContext.TestName.EndsWith('1'))
             {
