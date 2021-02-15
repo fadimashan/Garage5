@@ -213,7 +213,7 @@ namespace Garage_Ö5
                 switch (input)
                 {
                     case '1':
-                        if (garageHandler.garage.CheckIfThereIsNull())
+                        if (garageHandler.currentGarage.CheckIfThereIsNull())
                         {
                             Console.Clear();
                             "\n*************Add new Car************\n".PrintLine();
@@ -224,7 +224,7 @@ namespace Garage_Ö5
                         else { "Garage is full!\n\n".PrintLine(); goToMainmenu = true; }
                         break;
                     case '2':
-                        if (garageHandler.garage.CheckIfThereIsNull())
+                        if (garageHandler.currentGarage.CheckIfThereIsNull())
                         {
                             Console.Clear();
                             "\n*************Add new Airplane************\n".PrintLine();
@@ -236,7 +236,7 @@ namespace Garage_Ö5
                         else { "Garage is full!\n\n".PrintLine(); goToMainmenu = true; }
                         break;
                     case '3':
-                        if (garageHandler.garage.CheckIfThereIsNull())
+                        if (garageHandler.currentGarage.CheckIfThereIsNull())
                         {
                             Console.Clear();
                             "\n*************Add new Boat************\n".PrintLine();
@@ -248,7 +248,7 @@ namespace Garage_Ö5
                         else { "Garage is full!\n\n".PrintLine(); goToMainmenu = true; }
                         break;
                     case '4':
-                        if (garageHandler.garage.CheckIfThereIsNull())
+                        if (garageHandler.currentGarage.CheckIfThereIsNull())
                         {
                             Console.Clear();
                             "\n*************Add new Bus************\n".PrintLine();
@@ -260,7 +260,7 @@ namespace Garage_Ö5
                         else { "Garage is full!\n\n".PrintLine(); goToMainmenu = true; }
                         break;
                     case '5':
-                        if (garageHandler.garage.CheckIfThereIsNull())
+                        if (garageHandler.currentGarage.CheckIfThereIsNull())
                         {
                             Console.Clear();
                             "\n*************Add new Motorcycle************\n".PrintLine();
@@ -505,7 +505,7 @@ namespace Garage_Ö5
             do
             {
                 isUnique = true;
-                var arrList = garageHandler.garage.ToArray();
+                var arrList = garageHandler.currentGarage.ToArray();
                 "Add a registration number".PrintLine();
                 registerInput = Console.ReadLine();
                 for (int i = 0; i < arrList.Length; i++)

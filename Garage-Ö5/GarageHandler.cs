@@ -21,7 +21,7 @@ namespace Garage_Ö5
         {
             listOfGarage = new List<Garage<Vehicle>>();
             this.capacity = capacity;
-            CreateNewGarage(capacity, "garage");
+            CreateNewGarage(capacity,"garage");
 
         }
 

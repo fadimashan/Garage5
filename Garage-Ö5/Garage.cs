@@ -16,6 +16,7 @@ namespace Garage_Ö5
         public Garage(int capacity,string name)
         {
             Name = name;
+
             capacity = Math.Max(0, capacity);
             vehicleList = new T[capacity];
             vehLenght = vehicleList.Length;
