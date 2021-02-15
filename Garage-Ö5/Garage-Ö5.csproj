@@ -6,4 +6,8 @@
     <RootNamespace>Garage_Ö5</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.16.0" />
+  </ItemGroup>
+
 </Project>

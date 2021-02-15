@@ -125,10 +125,13 @@ namespace Garage_Ö5
 
         public IEnumerator<T> GetEnumerator()
         {
+            
             foreach (T item in vehicleList)
             {
-                 if(item != null) yield return item;                
+                 if(item != null)  
+                 yield return item;
             }
+
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
