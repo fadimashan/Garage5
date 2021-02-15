@@ -103,7 +103,7 @@ namespace Garage_Ö5
             bool garageOptions = true;
             while (garageOptions)
             {
-                (  "\n1. Add a new Garage"
+                ("\n1. Add a new Garage"
                  + "\n2. Chose a Garage"
                  + "\n3. Delete a Garage"
                  + "\n4. Print List of Garages"
@@ -137,14 +137,13 @@ namespace Garage_Ö5
 
                     case '2':
                         op.garageHandler.ChoseGarage();
-                        break;  
+                        break;
                     case '3':
                         op.garageHandler.DeleteGarage();
                         break;
-                           case '4':
+                    case '4':
                         op.garageHandler.PrintGarageList();
                         break;
-
                     case '0':
                         garageOptions = false;
                         break;

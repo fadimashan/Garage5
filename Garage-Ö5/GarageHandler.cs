@@ -7,7 +7,15 @@ namespace Garage_Ö5
     public interface IGarageHandler : IEnumerable
     {
         public void AddVehicale<T>(T item);
-        public Garage<Vehicle> Print();
+
+        public void CreateNewGarage(int capacity, string garageName);
+
+        public void ChoseGarage();
+
+        public void DeleteGarage();
+
+        public void PrintGarageList();
+
     }
 
     public class GarageHandler : IGarageHandler
@@ -22,18 +30,11 @@ namespace Garage_Ö5
             listOfGarage = new List<Garage<Vehicle>>();
             this.capacity = capacity;
             CreateNewGarage(capacity, "garage");
-
         }
 
         public void AddVehicale<T>(T item)
         {
             currentGarage.Add(item as Vehicle);
-        }
-
-
-        public Garage<Vehicle> Print()
-        {
-            return garage;
         }
         public void CreateNewGarage(int capacity, string garageName)
         {
@@ -54,8 +55,6 @@ namespace Garage_Ö5
             n = input.ParesToInt(n);
             currentGarage = listOfGarage[n - 1];
         }
-
-
         public void DeleteGarage()
         {
             Console.Clear();
@@ -68,8 +67,6 @@ namespace Garage_Ö5
             listOfGarage.RemoveAt(n - 1);
 
         }
-
-
         public void PrintGarageList()
         {
             Console.Clear();
