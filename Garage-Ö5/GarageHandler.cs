@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Garage_Ö5
 {
-    public interface IGarageHandler :  IEnumerable
+    public interface IGarageHandler : IEnumerable
     {
         public void AddVehicale<T>(T item);
         public Garage<Vehicle> Print();
@@ -21,11 +21,56 @@ namespace Garage_Ö5
         {
             listOfGarage = new List<Garage<Vehicle>>();
             this.capacity = capacity;
-            CreateNewGarage(capacity,"garage");
+            CreateNewGarage(capacity, "garage");
 
         }
 
+        public void AddVehicale<T>(T item)
+        {
+            currentGarage.Add(item as Vehicle);
+        }
+
+
+        public Garage<Vehicle> Print()
+        {
+            return garage;
+        }
+        public void CreateNewGarage(int capacity, string garageName)
+        {
+
+            Garage<Vehicle> newGarage = new Garage<Vehicle>(capacity, garageName);
+            listOfGarage.Add(newGarage);
+            currentGarage = newGarage;
+
+        }
         public void ChoseGarage()
+        {
+            Console.Clear();
+            "This is the accesit Garages.".PrintLine();
+            PrintGarageList();
+            "Chose a Garage number to use.".PrintLine();
+            var input = Console.ReadLine();
+            int n = 0;
+            n = input.ParesToInt(n);
+            currentGarage = listOfGarage[n - 1];
+        }
+
+
+        public void DeleteGarage()
+        {
+            Console.Clear();
+            "This is the accesit Garages.".PrintLine();
+            PrintGarageList();
+            "Chose a Garage number to delete.".PrintLine();
+            var input = Console.ReadLine();
+            int n = 0;
+            n = input.ParesToInt(n);
+            listOfGarage.RemoveAt(n - 1);
+
+        }
+
+
+        public void PrintGarageList()
         {
             Console.Clear();
             "This is the accesit Garages.".PrintLine();
@@ -34,29 +79,8 @@ namespace Garage_Ö5
                 $"{i + 1}. {listOfGarage[i].Name}".PrintLine();
             }
 
-            "Chose a Garage number to use.".PrintLine();
-            var input = Console.ReadLine();
-            int n = 0;
-            n = input.ParesToInt(n);
-            currentGarage = listOfGarage[n - 1];
-        }
-   
-        public void AddVehicale<T>(T item)
-        {
-            currentGarage.Add(item as Vehicle);
-        }
-
-        public Garage<Vehicle> Print()
-        {
-            return garage;
-        }
-
-        public void CreateNewGarage(int capacity, string garageName )
-        {
-
-            Garage<Vehicle> newGarage = new Garage<Vehicle>(capacity, garageName);
-            listOfGarage.Add(newGarage);
-            currentGarage = newGarage;
+            ($"\n\nTotal number of the garages is: {listOfGarage.Count}"
+             + $".\n***********************************************").PrintLine();
 
         }
 
