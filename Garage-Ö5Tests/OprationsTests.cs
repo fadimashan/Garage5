@@ -89,6 +89,7 @@ namespace Garage_Ö5.Tests
             //Act
             var addTest = garage.Add(new Car("car123", "Red", 3, 3));
             var actual = garage.vehLenght;
+    
 
             //Assert
             Assert.IsFalse(addTest);

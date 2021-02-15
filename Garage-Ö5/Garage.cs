@@ -32,7 +32,6 @@ namespace Garage_Ö5
                     return true;
                 }
             }
-
             return false;
         }
 
