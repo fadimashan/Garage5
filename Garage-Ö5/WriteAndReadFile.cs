@@ -10,14 +10,16 @@ namespace Garage_Ö5
     {
         string path = $"{Directory.GetCurrentDirectory()}/Sample.txt";
         Oprations op;
-        
+
         public WriteAndReadFile(int capacity)
         {
             op = new Oprations(capacity);
             if (!File.Exists(path))
             {
+                "There is no file exist to load or write on it! So, we will create a new one now, please rerun the app now!".PrintLine();
                 File.Create(path);
-                
+                Environment.Exit(0);
+
             }
         }
 
