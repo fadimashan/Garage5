@@ -14,12 +14,11 @@ namespace Garage_Ö5
         public WriteAndReadFile(int capacity)
         {
             op = new Oprations(capacity);
+            var file = Path.Combine(path);
             if (!File.Exists(path))
             {
-                "There is no file exist to load or write on it! So, we will create a new one now, please rerun the app now!".PrintLine();
-                File.Create(path);
-                Environment.Exit(0);
-
+                FileStream fs = File.Create(file);
+                fs.Close();
             }
         }
 
@@ -60,6 +59,7 @@ namespace Garage_Ö5
 
         public List<string> ReadFile()
         {
+
             List<string> lines = File.ReadAllLines(path).ToList();
             return lines;
         }
