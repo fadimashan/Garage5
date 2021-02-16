@@ -15,10 +15,10 @@ namespace Garage_Ö5
             garageHandler.AddVehicale(new Car("car123", "Red", 4, 12));
             counter = garageHandler.currentGarage.Counter();
             Capacity = capacity;
-            
+
         }
 
-   
+
 
         // features 
         internal void SearchOnVehicle()
@@ -351,9 +351,9 @@ namespace Garage_Ö5
             var lines = wdf.ReadFile();
             var vehList = garageHandler.currentGarage.vehLenght;
 
-            if (vehList < lines.Capacity) 
+            if (vehList < lines.Capacity)
             { "You will not be able to restore all the data because the new capacity less than the data size!\n\n".PrintLine(); }
-            
+
             foreach (var line in lines)
             {
                 string[] entries = line.Split(',');
@@ -438,10 +438,22 @@ namespace Garage_Ö5
         public void AddCar()
         {
             var vehicle = AddNewVehicle();
-            ("enter cylender").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
+            bool pass = false;
+            int output;
+            do
+            {
+                ("enter cylender").PrintLine();
+                var input = Console.ReadLine();
+                output = 0;
+                output = input.ParesToInt(output);
+                if (output > 0 && output <= 200)
+                {
+                    pass = true;
+                }
+                else { "Cylender number should be less than 200".PrintLine(); }
+            } while (!pass);
+
+
             var car = new Car(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.AddVehicale(car);
             List<string> cars = new List<string> { car.RegistreringNum, car.WheelsNum.ToString(), car.Color, car.Cylinder.ToString() };
@@ -449,39 +461,80 @@ namespace Garage_Ö5
         public void AddBoat()
         {
             var vehicle = AddNewVehicle();
-            ("enter lenght").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
+            bool pass = false;
+            double output;
+            do
+            {
+
+                ("enter lenght").PrintLine();
+                var input = Console.ReadLine();
+                output = 0.0;
+                double.TryParse(input, out output);
+                if (output > 0 && output <= 30)
+                {
+                    pass = true;
+                }
+                else { "Lenght number should be less than 30 m".PrintLine(); }
+            } while (!pass);
             var boat = new Boat(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.AddVehicale(boat);
         }
         public void AddAirplane()
         {
             var vehicle = AddNewVehicle();
-            ("enter engin number").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
+            bool pass = false;
+            int output;
+            do
+            {
+                ("enter engin number").PrintLine();
+                var input = Console.ReadLine();
+                output = 0;
+                output = input.ParesToInt(output);
+                if (output > 0 && output <= 10)
+                {
+                    pass = true;
+                }
+                else { "Engin number should be 1-10".PrintLine(); }
+            } while (!pass);
             var airplane = new Airplane(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.AddVehicale(airplane);
         }
         public void AddBus()
         {
             var vehicle = AddNewVehicle();
-            ("enter sets number").PrintLine();
-            var input = Console.ReadLine();
-            int output = 0;
-            output = input.ParesToInt(output);
+            bool pass = false;
+            int output;
+            do
+            {
+                ("enter sets number").PrintLine();
+                var input = Console.ReadLine();
+                output = 0;
+                output = input.ParesToInt(output);
+                if (output > 0 && output <= 60)
+                {
+                    pass = true;
+                }
+                else { "Sets number should be 1-60".PrintLine(); }
+            } while (!pass);
             var bus = new Bus(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.AddVehicale(bus);
         }
         public void AddMotorcycle()
         {
             var vehicle = AddNewVehicle();
-            ("enter fueltype").PrintLine();
-            var input = Console.ReadLine();
-            var motorcycle = new Motorcycle(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, input);
+            bool pass = false;
+            string output;
+            do
+            {
+                ("enter fueltype").PrintLine();
+                 output = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(output))
+                {
+                    pass = true;
+                }
+            else { "Fueltype should not be empty".PrintLine(); }
+            } while (!pass);
+            var motorcycle = new Motorcycle(vehicle.RegistreringNum, vehicle.Color, vehicle.WheelsNum, output);
             garageHandler.AddVehicale(motorcycle);
         }
 
@@ -510,7 +563,7 @@ namespace Garage_Ö5
                 registerInput = Console.ReadLine();
                 for (int i = 0; i < arrList.Length; i++)
                 {
-                    if (arrList[i] != null)
+                    if (arrList[i] != null && !String.IsNullOrWhiteSpace(registerInput))
                     {
                         isUnique = true;
                         if (arrList[i].RegistreringNum.ToLower() == registerInput.ToLower())
@@ -519,6 +572,11 @@ namespace Garage_Ö5
                             isUnique = false;
 
                         }
+                    }
+                    else
+                    {
+                        isUnique = false;
+                        "Registration number should not be empty".PrintLine();
                     }
 
                 }
@@ -529,18 +587,41 @@ namespace Garage_Ö5
 
         public string Color()
         {
-            "Add a Color".PrintLine();
-            var color = Console.ReadLine();
+            bool pass = false;
+            string color;
+            do
+            {
+                "Add a Color".PrintLine();
+                color = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(color))
+                {
+                    pass = true;
+                }
+                else "Color should not be empty".PrintLine();
+            } while (!pass);
             return color;
+
         }
 
         public int WheelsNum()
         {
-            "How many wheels".PrintLine();
-            var wheelInput = Console.ReadLine();
-            var wheelsNum = 0;
-            wheelsNum = wheelInput.ParesToInt(wheelsNum);
+            bool pass = false;
+            int wheelsNum;
+            do
+            {
+                "How many wheels".PrintLine();
+                var wheelInput = Console.ReadLine();
+                wheelsNum = 0;
+                wheelsNum = wheelInput.ParesToInt(wheelsNum);
+                if (wheelsNum > 0 && wheelsNum <= 12)
+                {
+                    pass = true;
+                }
+                else { "Wheels number should be 1-12".PrintLine(); }
+            } while (!pass);
+
             return wheelsNum;
+
         }
 
     }
