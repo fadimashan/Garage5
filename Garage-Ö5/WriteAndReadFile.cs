@@ -10,9 +10,15 @@ namespace Garage_Ö5
     {
         string path = $"{Directory.GetCurrentDirectory()}/Sample.txt";
         Oprations op;
+        
         public WriteAndReadFile(int capacity)
         {
             op = new Oprations(capacity);
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+                
+            }
         }
 
         public void WriteFile()

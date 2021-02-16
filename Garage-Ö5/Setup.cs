@@ -92,7 +92,7 @@ namespace Garage_Ö5
                         Environment.Exit(0);
                         break;
                     default:
-                        ("Please enter some valid input (0, 1, 2, 3, 4)").PrintLine();
+                        ("Please enter some valid input (0, 1, 2, 3, 4)\n\n").PrintLine();
                         break;
                 }
             }

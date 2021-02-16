@@ -27,7 +27,7 @@ namespace Garage_Ö5
             var vehicleList = garageHandler.currentGarage.ToArray();
             "Enter the vehicale registration number to see the details".PrintLine();
             string regiNumber = Console.ReadLine();
-            bool access = false;
+            bool exist = false;
             for (int i = 0; i < vehicleList.Length; i++)
             {
                 if (vehicleList[i] != null && vehicleList[i].RegistreringNum.ToLower() == regiNumber.ToLower())
@@ -36,39 +36,39 @@ namespace Garage_Ö5
                     {
                         var car = vehicleList[i] as Car;
                         ($" This Vehicle is a {car.WheelsNum} wheels Car, The registration#: {car.RegistreringNum}, Color: {car.Color} and it's: {car.Cylinder} Cylinder \n\n").PrintLine();
-                        access = true;
+                        exist = true;
                     }
 
                     if (vehicleList[i] is Boat)
                     {
                         var boat = vehicleList[i] as Boat;
                         ($" This Vehicle is a {boat.WheelsNum} wheels Boat, The registration#: {boat.RegistreringNum}, Color: {boat.Color} and it's: {boat.Lenght} Lenght \n\n").PrintLine();
-                        access = true;
+                        exist = true;
                     }
 
                     if (vehicleList[i] is Airplane)
                     {
                         var airplane = vehicleList[i] as Airplane;
                         ($" This Vehicle is a {airplane.WheelsNum} wheels Airplane, The registration#: {airplane.RegistreringNum}, Color: {airplane.Color}, with: {airplane.EnginesNum} Engins \n\n").PrintLine();
-                        access = true;
+                        exist = true;
                     }
 
                     if (vehicleList[i] is Bus)
                     {
                         var bus = vehicleList[i] as Bus;
                         ($" This Vehicle is a {bus.WheelsNum} wheels Bus, The registration#: {bus.RegistreringNum}, Color: {bus.Color}, with: {bus.SeatsNum} sets \n\n").PrintLine();
-                        access = true;
+                        exist = true;
                     }
 
                     if (vehicleList[i] is Motorcycle)
                     {
                         var motorcycle = vehicleList[i] as Motorcycle;
                         ($" This Vehicle is a {motorcycle.WheelsNum} wheels Motorcycle, The registration#: {motorcycle.RegistreringNum}, Color: {motorcycle.Color} and Fueltype is: {motorcycle.Fueltype}\n\n").PrintLine();
-                        access = true;
+                        exist = true;
                     }
                 }
             }
-            if (!access) "This registrtion# not access!".PrintLine();
+            if (!exist) "This registrtion# not exist!".PrintLine();
         }
         public void SerchViaProperties()
         {
