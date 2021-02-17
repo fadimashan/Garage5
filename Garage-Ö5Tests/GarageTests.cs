@@ -4,12 +4,11 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Garage_Ö5.Tests
 {
     [TestClass()]
-    public class OprationsTests
+    public class GarageTests
     {
         private Garage<Vehicle> garage;
 
