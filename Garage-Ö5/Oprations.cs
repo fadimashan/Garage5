@@ -9,12 +9,15 @@ namespace Garage_Ö5
         public GarageHandler garageHandler;
         public int counter;
         public int Capacity { get; set; }
+        WriteAndReadFile wrf;
+
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
             garageHandler.AddVehicale(new Car("car123", "Red", 4, 12));
             counter = garageHandler.currentGarage.Counter();
             Capacity = capacity;
+            wrf = new WriteAndReadFile(capacity);
 
         }
 
@@ -622,6 +625,13 @@ namespace Garage_Ö5
 
             return wheelsNum;
 
+        }
+
+
+        public void WriteToFile()
+        {
+            var arr = garageHandler.currentGarage.ToArray();
+            //wrf.WriteFile(arr);
         }
 
     }

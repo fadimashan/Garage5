@@ -80,6 +80,7 @@ namespace Garage_Ö5
                         break;
                     case '7':
                         wRFile.WriteFile();
+                        
                         break;
                     case '8':
                         op.ReadFromFile();
