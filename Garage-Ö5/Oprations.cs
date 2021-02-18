@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,17 +11,13 @@ namespace Garage_Ö5
         public int counter;
         public int Capacity { get; set; }
         WriteAndReadFile wrf;
-
         public Oprations(int capacity)
         {
             garageHandler = new GarageHandler(capacity);
             garageHandler.AddVehicale(new Car("car123", "Red", 4, 12));
             counter = garageHandler.currentGarage.Counter();
             Capacity = capacity;
-            wrf = new WriteAndReadFile(capacity);
-
         }
-
 
 
         // features 
@@ -628,10 +625,12 @@ namespace Garage_Ö5
         }
 
 
-        public void WriteToFile()
+        public void WriteToFile(int capacity)
         {
+            wrf = new WriteAndReadFile(capacity);
+
             var arr = garageHandler.currentGarage.ToArray();
-            //wrf.WriteFile(arr);
+            wrf.WriteFile(arr);
         }
 
     }

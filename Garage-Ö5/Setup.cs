@@ -12,6 +12,8 @@ namespace Garage_Ö5
         public Oprations op;
         private IConfiguration config;
 
+        public int capacityNum;
+
         public Setup(IConfiguration config)
         {
             this.config = config;
@@ -19,7 +21,7 @@ namespace Garage_Ö5
         public void Run()
         {
 
-            var capacityNum = config.GetGarageSetting("capacity");
+             capacityNum = config.GetGarageSetting("capacity");
 
             op = new Oprations(capacityNum);
             WriteAndReadFile wRFile = new WriteAndReadFile(capacityNum);
@@ -79,7 +81,7 @@ namespace Garage_Ö5
                         op.SerchViaProperties();
                         break;
                     case '7':
-                        wRFile.WriteFile();
+                        op.WriteToFile(capacityNum);
                         
                         break;
                     case '8':

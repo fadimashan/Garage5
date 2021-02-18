@@ -7,7 +7,7 @@ namespace Garage_Ö5
 {
     public class WriteAndReadFile
     {
-        string path = $"{Environment.CurrentDirectory}/Sample.txt";
+        string path = $"{Directory.GetCurrentDirectory()}/Sample.txt";
         Oprations op;
 
         public WriteAndReadFile(int capacity)
@@ -21,9 +21,9 @@ namespace Garage_Ö5
             }
         }
 
-        public void WriteFile()
+        public void WriteFile(Vehicle[] vehicle)
         {
-            var vehicle = op.garageHandler.currentGarage.ToList();
+          //  var vehicle = op.garageHandler.currentGarage.ToList();
             List<string> output = new List<string>();
 
             vehicle.Where(a => a is Car)
